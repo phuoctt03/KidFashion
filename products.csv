@@ -1,13 +1,14 @@
-imageUrl,nameProduct,category,price
-https://images.unsplash.com/photo-1567113463300-102a7eb3cb26?q=80&w=1287&auto=format&fit=crop,Váy Hoa Dễ Thương,Váy,299000
-https://images.unsplash.com/photo-1519238359922-989348752efb?q=80&w=1287&auto=format&fit=crop,Quần Yếm Jeans,Quần Yếm,349000
-https://images.unsplash.com/photo-1519278409-1f56fdda7fe5?q=80&w=1287&auto=format&fit=crop,Áo Thun Sọc,Áo Thun,149000
-https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?q=80&w=1287&auto=format&fit=crop,Đồ Ngủ Hình Khủng Long,Đồ Ngủ,199000
-https://images.unsplash.com/photo-1602407294553-6ac9170b3ed0?q=80&w=1287&auto=format&fit=crop,Váy Tutu Công Chúa,Váy,249000
-https://images.unsplash.com/photo-1522771930-78848d9293e8?q=80&w=1287&auto=format&fit=crop,Áo Hoodie Hoạt Hình,Áo Khoác,279000
-https://images.unsplash.com/photo-1565506737357-af89222625ad?q=80&w=1287&auto=format&fit=crop,Đồ Bơi Chấm Bi,Đồ Bơi,229000
-https://images.unsplash.com/photo-1604671801908-6f0c6a092c05?q=80&w=1287&auto=format&fit=crop,Áo Khoác Mùa Đông,Áo Khoác,399000
-https://images.unsplash.com/photo-1503944583220-79d8926ad5e2?q=80&w=1287&auto=format&fit=crop,Bộ Đồng Phục Học Sinh,Đồng Phục,449000
-https://images.unsplash.com/photo-1471286174890-9c112ffca5b4?q=80&w=1287&auto=format&fit=crop,Áo Thể Thao,Đồ Thể Thao,199000
-https://images.unsplash.com/photo-1622290291468-a28f7a7dc6a8?q=80&w=1287&auto=format&fit=crop,Bộ Vest Lịch Sự,Trang Phục Lễ Hội,499000
-https://images.unsplash.com/photo-1529973625058-a665431328fb?q=80&w=1287&auto=format&fit=crop,Trang Phục Ba Lê,Trang Phục Nhảy,329000
+imageUrl,nameProduct,category,price,colors
+https://images.unsplash.com/photo-1567113463300-102a7eb3cb26?q=80&w=1287&auto=format&fit=crop,Váy Hoa Dễ Thương,Váy,299000,Hồng:#FFB6C1
+https://images.unsplash.com/photo-1519238359922-989348752efb?q=80&w=1287&auto=format&fit=crop,Váy Hoa Dễ Thương,Váy,299000,Vàng:#FFEB3B
+https://images.unsplash.com/photo-1567113463300-102a7eb3cb26?q=80&w=1287&auto=format&fit=crop,Váy Hoa Dễ Thương,Váy,299000,Trắng:#FFFFFF
+https://images.unsplash.com/photo-1519238359922-989348752efb?q=80&w=1287&auto=format&fit=crop,Quần Yếm Jeans,Quần Yếm,349000,Xanh đậm:#1976D2
+https://images.unsplash.com/photo-1519238359922-989348752efb?q=80&w=1287&auto=format&fit=crop,Quần Yếm Jeans,Quần Yếm,349000,Xanh nhạt:#64B5F6
+https://images.unsplash.com/photo-1519238359922-989348752efb?q=80&w=1287&auto=format&fit=crop,Quần Yếm Jeans,Quần Yếm,349000,Đen:#212121
+https://images.unsplash.com/photo-1519278409-1f56fdda7fe5?q=80&w=1287&auto=format&fit=crop,Áo Thun Sọc,Áo Thun,149000,Đỏ:#F44336
+https://images.unsplash.com/photo-1519278409-1f56fdda7fe5?q=80&w=1287&auto=format&fit=crop,Áo Thun Sọc,Áo Thun,149000,Xanh lá:#4CAF50
+https://images.unsplash.com/photo-1519278409-1f56fdda7fe5?q=80&w=1287&auto=format&fit=crop,Áo Thun Sọc,Áo Thun,149000,Xanh dương:#2196F3
+https://images.unsplash.com/photo-1519278409-1f56fdda7fe5?q=80&w=1287&auto=format&fit=crop,Áo Thun Sọc,Áo Thun,149000,Đen:#212121
+https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?q=80&w=1287&auto=format&fit=crop,Đồ Ngủ Hình Khủng Long,Đồ Ngủ,199000,Xanh lá:#4CAF50
+https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?q=80&w=1287&auto=format&fit=crop,Đồ Ngủ Hình Khủng Long,Đồ Ngủ,199000,Xám:#9E9E9E
+https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?q=80&w=1287&auto=format&fit=crop,Đồ Ngủ Hình Khủng Long,Đồ Ngủ,199000,Xanh dương:#2196F3
