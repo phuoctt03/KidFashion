@@ -1,14 +1,19 @@
 imageUrl,nameProduct,category,price,colors
-https://images.unsplash.com/photo-1567113463300-102a7eb3cb26?q=80&w=1287&auto=format&fit=crop,Váy Hoa Dễ Thương,Váy,299000,Hồng:#FFB6C1
-https://images.unsplash.com/photo-1519238359922-989348752efb?q=80&w=1287&auto=format&fit=crop,Váy Hoa Dễ Thương,Váy,299000,Vàng:#FFEB3B
-https://images.unsplash.com/photo-1567113463300-102a7eb3cb26?q=80&w=1287&auto=format&fit=crop,Váy Hoa Dễ Thương,Váy,299000,Trắng:#FFFFFF
-https://images.unsplash.com/photo-1519238359922-989348752efb?q=80&w=1287&auto=format&fit=crop,Quần Yếm Jeans,Quần Yếm,349000,Xanh đậm:#1976D2
-https://images.unsplash.com/photo-1519238359922-989348752efb?q=80&w=1287&auto=format&fit=crop,Quần Yếm Jeans,Quần Yếm,349000,Xanh nhạt:#64B5F6
-https://images.unsplash.com/photo-1519238359922-989348752efb?q=80&w=1287&auto=format&fit=crop,Quần Yếm Jeans,Quần Yếm,349000,Đen:#212121
-https://images.unsplash.com/photo-1519278409-1f56fdda7fe5?q=80&w=1287&auto=format&fit=crop,Áo Thun Sọc,Áo Thun,149000,Đỏ:#F44336
-https://images.unsplash.com/photo-1519278409-1f56fdda7fe5?q=80&w=1287&auto=format&fit=crop,Áo Thun Sọc,Áo Thun,149000,Xanh lá:#4CAF50
-https://images.unsplash.com/photo-1519278409-1f56fdda7fe5?q=80&w=1287&auto=format&fit=crop,Áo Thun Sọc,Áo Thun,149000,Xanh dương:#2196F3
-https://images.unsplash.com/photo-1519278409-1f56fdda7fe5?q=80&w=1287&auto=format&fit=crop,Áo Thun Sọc,Áo Thun,149000,Đen:#212121
-https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?q=80&w=1287&auto=format&fit=crop,Đồ Ngủ Hình Khủng Long,Đồ Ngủ,199000,Xanh lá:#4CAF50
-https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?q=80&w=1287&auto=format&fit=crop,Đồ Ngủ Hình Khủng Long,Đồ Ngủ,199000,Xám:#9E9E9E
-https://images.unsplash.com/photo-1518831959646-742c3a14ebf7?q=80&w=1287&auto=format&fit=crop,Đồ Ngủ Hình Khủng Long,Đồ Ngủ,199000,Xanh dương:#2196F3
+images/babythree1.jpg,Bộ Váy Baby Three cho bé gái,Váy,139000,Hồng:#e91f83
+images/babythree1-1.jpg,Bộ Váy Baby Three cho bé gái,Váy,139000,Cam:#faa9a6
+images/babythree1-2.jpg,Bộ Váy Baby Three cho bé gái,Váy,139000,Trắng:#f2f7fd
+images/babythree2.jpg,Bộ Váy Baby Three cho bé gái mẫu 2,Váy,139000,Cam:#faa9a6
+images/babythree2-1.jpg,Bộ Váy Baby Three cho bé gái mẫu 2,Váy,139000,Hồng:#e91f83
+images/bobetrai1.jpg,Bộ thời trang bé trai,Bộ bé trai,159000,Xanh:#526d8a
+images/bobetrai1-1.jpg,Bộ thời trang bé trai,Bộ bé trai,159000,Xanh:#0e223a
+images/bobetrai1-2.jpg,Bộ thời trang bé trai,Bộ bé trai,159000,Đen:#161616
+images/bososinh1.jpg,Bộ thời trang trẻ em,Bộ trẻ em,109000,Xám:#807474
+images/bososinh1-1.jpg,Bộ thời trang trẻ em,Bộ trẻ em,109000,Nâu:#8d5a3b
+images/bososinh1-2.jpg,Bộ thời trang trẻ em,Bộ trẻ em,109000,Đen:#32323e
+images/botreem1.jpg,Bộ thời trang cho bé,Bộ bé sơ sinh,109000,Hồng:#bf7a71
+images/botreem1-1.jpg,Bộ thời trang cho bé,Bộ bé sơ sinh,109000,Tím:#c9bccd
+images/khunglong-blue.jpg,Bộ khủng long bé trai,Bộ bé trai,139000,Xanh dương:#0187fd
+images/khunglong-green.jpg,Bộ khủng long bé trai,Bộ bé trai,139000,Xanh lục:#009f73
+images/khunglong-orange.jpg,Bộ khủng long bé trai,Bộ bé trai,139000,Cam:#fc391b
+images/khunglong-red.jpg,Bộ khủng long bé trai,Bộ bé trai,139000,Đỏ:#ce0000
+images/khunglong-yellow.jpg,Bộ khủng long bé trai,Bộ bé trai,139000,Vàng:#febc1d
