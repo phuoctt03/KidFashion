@@ -155,6 +155,7 @@ body {
   height: 100%;
   object-fit: cover;
   transition: transform 0.5s;
+  cursor: pointer;
 }
 
 .product-card:hover .product-img {
@@ -258,6 +259,13 @@ body {
   color: var(--accent-color);
 }
 
+/* Style cho social links trong footer */
+.social-links a {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+}
+
 #loading {
   display: flex;
   justify-content: center;
@@ -331,6 +339,48 @@ body {
 
 .color-selected-indicator.show {
   transform: translateY(0);
+}
+
+/* Thêm style cho nút messenger và modal */
+.btn-messenger {
+  background-color: #0084ff;
+  color: white;
+  border: none;
+  transition: background-color 0.3s;
+}
+
+.btn-messenger:hover {
+  background-color: #0070d8;
+  color: white;
+}
+
+/* Style cho modal sản phẩm */
+.modal-content {
+  border-radius: 15px;
+  border: none;
+  overflow: hidden;
+}
+
+.modal-header {
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
+}
+
+.modal-footer {
+  border-top: 1px solid rgba(0, 0, 0, 0.1);
+  background-color: #f8f9fa;
+}
+
+#modalProductImage {
+  max-height: 300px;
+  object-fit: contain;
+  border-radius: 8px;
+}
+
+/* Style cho modal color options */
+#modalProductColors .color-option {
+  width: 25px;
+  height: 25px;
 }
 
 @media (max-width: 576px) {
