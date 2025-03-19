@@ -144,17 +144,33 @@ body {
   box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
 }
 
+/* Thêm style cho overlay loading khi đổi màu sắc */
 .product-img-container {
   height: 180px;
   overflow: hidden;
   position: relative;
 }
 
+.img-loading-overlay {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(255, 255, 255, 0.8);
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  z-index: 2;
+  transition: all 0.3s ease;
+}
+
+/* Hiệu ứng chuyển đổi mượt mà cho ảnh */
 .product-img {
   width: 100%;
   height: 100%;
   object-fit: cover;
-  transition: transform 0.5s;
+  transition: transform 0.5s, opacity 0.3s;
   cursor: pointer;
 }
 
@@ -371,16 +387,20 @@ body {
   background-color: #f8f9fa;
 }
 
+/* Hiệu ứng chuyển đổi mượt mà cho ảnh trong modal */
 #modalProductImage {
   max-height: 300px;
   object-fit: contain;
   border-radius: 8px;
+  transition: opacity 0.3s ease;
 }
 
-/* Style cho modal color options */
-#modalProductColors .color-option {
-  width: 25px;
-  height: 25px;
+/* Style cho thông báo hướng dẫn */
+.user-guide {
+  border-left: 4px solid var(--primary-color);
+  padding: 0.75rem 1rem;
+  font-size: 0.9rem;
+  background-color: rgba(255, 107, 107, 0.05);
 }
 
 @media (max-width: 576px) {
@@ -411,6 +431,11 @@ body {
 
   .hero-subtitle {
     font-size: 0.9rem;
+  }
+
+  .user-guide {
+    font-size: 0.8rem;
+    padding: 0.5rem 0.75rem;
   }
 }
 

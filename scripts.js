@@ -10,6 +10,19 @@ document.addEventListener("DOMContentLoaded", () => {
   let minPrice = 0
   let maxPrice = Number.POSITIVE_INFINITY
 
+  // Thêm biến toàn cục để theo dõi ảnh đã được tải trước
+  const preloadedImages = {}
+
+  // Hàm tải trước ảnh
+  function preloadImage(url) {
+    if (!preloadedImages[url]) {
+      const img = new Image()
+      img.src = url
+      preloadedImages[url] = img
+    }
+    return preloadedImages[url]
+  }
+
   // Hàm tải và phân tích file CSV
   function loadProducts() {
     // Check if Papa is defined
@@ -39,6 +52,9 @@ document.addEventListener("DOMContentLoaded", () => {
                 color: color,
               }
             })
+
+            // Tải trước tất cả ảnh sản phẩm
+            preloadAllProductImages()
 
             // Nhóm sản phẩm theo tên
             groupProducts()
@@ -84,7 +100,7 @@ document.addEventListener("DOMContentLoaded", () => {
     filteredProducts = Object.values(groupedProducts)
   }
 
-  // Hàm hiển thị sản phẩm đã nhóm
+  // Sửa hàm displayGroupedProducts để thêm tải trước ảnh
   function displayGroupedProducts() {
     const container = document.getElementById("products-container")
     const noResults = document.getElementById("no-results")
@@ -114,35 +130,55 @@ document.addEventListener("DOMContentLoaded", () => {
         product.variants.forEach((variant, index) => {
           const isActive = index === 0 ? "active" : ""
           colorsHtml += `
-                          <div class="color-option ${isActive}" 
-                               data-color="${variant.color.name}" 
-                               data-color-code="${variant.color.code}" 
-                               data-image-url="${variant.imageUrl}"
-                               style="background-color: ${variant.color.code};" 
-                               title="${variant.color.name}">
-                          </div>`
+                        <div class="color-option ${isActive}" 
+                             data-color="${variant.color.name}" 
+                             data-color-code="${variant.color.code}" 
+                             data-image-url="${variant.imageUrl}"
+                             style="background-color: ${variant.color.code};" 
+                             title="${variant.color.name}">
+                        </div>`
+
+          // Tải trước ảnh cho mỗi biến thể màu sắc
+          preloadImage(variant.imageUrl)
         })
         colorsHtml += "</div>"
       }
 
       productCard.innerHTML = `
-                  <div class="product-card">
-                      <div class="product-img-container">
-                          <img src="${product.imageUrl}" alt="${product.nameProduct}" class="product-img">
-                      </div>
-                      <div class="product-info">
-                          <span class="product-category">${product.category}</span>
-                          <h5 class="product-title">${product.nameProduct}</h5>
-                          <p class="product-price">${formattedPrice}đ</p>
-                          ${colorsHtml}
-                      </div>
-                  </div>
-              `
+                <div class="product-card">
+                    <div class="product-img-container">
+                        <img src="${product.imageUrl}" alt="${product.nameProduct}" class="product-img">
+                        <div class="img-loading-overlay">
+                            <div class="spinner-border spinner-border-sm text-primary" role="status">
+                                <span class="visually-hidden">Đang tải...</span>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="product-info">
+                        <span class="product-category">${product.category}</span>
+                        <h5 class="product-title">${product.nameProduct}</h5>
+                        <p class="product-price">${formattedPrice}đ</p>
+                        ${colorsHtml}
+                    </div>
+                </div>
+            `
 
       container.appendChild(productCard)
 
       // Thêm sự kiện cho các tùy chọn màu sắc
       const colorOptions = productCard.querySelectorAll(".color-option")
+      const imgContainer = productCard.querySelector(".product-img-container")
+      const productImg = productCard.querySelector(".product-img")
+      const loadingOverlay = productCard.querySelector(".img-loading-overlay")
+
+      // Ẩn overlay loading ban đầu
+      loadingOverlay.style.display = "none"
+
+      // Thêm sự kiện khi ảnh chính tải xong
+      productImg.onload = () => {
+        loadingOverlay.style.display = "none"
+      }
+
       colorOptions.forEach((option) => {
         option.addEventListener("click", function (e) {
           e.preventDefault()
@@ -159,9 +195,34 @@ document.addEventListener("DOMContentLoaded", () => {
           const imageUrl = this.dataset.imageUrl
 
           // Cập nhật hình ảnh sản phẩm nếu có
-          if (imageUrl) {
-            const productImg = productCard.querySelector(".product-img")
-            productImg.src = imageUrl
+          if (imageUrl && imageUrl !== productImg.src) {
+            // Hiển thị overlay loading
+            loadingOverlay.style.display = "flex"
+
+            // Ẩn ảnh hiện tại trong khi đang tải
+            productImg.style.opacity = "0.3"
+
+            // Kiểm tra xem ảnh đã được tải trước chưa
+            const preloadedImg = preloadedImages[imageUrl]
+
+            if (preloadedImg && preloadedImg.complete) {
+              // Nếu ảnh đã tải xong, cập nhật ngay lập tức
+              setTimeout(() => {
+                productImg.src = imageUrl
+                productImg.style.opacity = "1"
+                loadingOverlay.style.display = "none"
+              }, 300) // Thêm độ trễ nhỏ để hiệu ứng loading hiển thị rõ ràng hơn
+            } else {
+              // Nếu ảnh chưa tải xong, đợi sự kiện onload
+              const newImg = new Image()
+              newImg.onload = () => {
+                productImg.src = imageUrl
+                productImg.style.opacity = "1"
+                loadingOverlay.style.display = "none"
+                preloadedImages[imageUrl] = newImg
+              }
+              newImg.src = imageUrl
+            }
           }
 
           // Hiển thị thông báo màu đã chọn
@@ -175,10 +236,6 @@ document.addEventListener("DOMContentLoaded", () => {
           if (existingIndicator) {
             existingIndicator.remove()
           }
-
-          // Thêm thông báo màu mới
-          // const productInfo = productCard.querySelector(".product-info")
-          // productInfo.appendChild(colorIndicator)
 
           // Hiệu ứng hiển thị thông báo
           setTimeout(() => {
@@ -317,7 +374,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Thêm code xử lý modal vào cuối file, trước dòng cuối cùng (})
 
-  // Hàm hiển thị modal sản phẩm
+  // Sửa hàm showProductModal để thêm tải trước ảnh
   function showProductModal(product, selectedColor) {
     const modal = document.getElementById("productModal")
     const modalImage = document.getElementById("modalProductImage")
@@ -326,7 +383,27 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalColors = document.getElementById("modalProductColors")
 
     // Cập nhật thông tin sản phẩm trong modal
-    modalImage.src = selectedColor ? selectedColor.dataset.imageUrl : product.querySelector(".product-img").src
+    const imageSrc = selectedColor ? selectedColor.dataset.imageUrl : product.querySelector(".product-img").src
+
+    // Hiển thị loading trước khi tải ảnh
+    modalImage.style.opacity = "0.5"
+
+    // Cập nhật ảnh với hiệu ứng loading
+    if (preloadedImages[imageSrc] && preloadedImages[imageSrc].complete) {
+      modalImage.src = imageSrc
+      setTimeout(() => {
+        modalImage.style.opacity = "1"
+      }, 200)
+    } else {
+      const newImg = new Image()
+      newImg.onload = () => {
+        modalImage.src = imageSrc
+        modalImage.style.opacity = "1"
+        preloadedImages[imageSrc] = newImg
+      }
+      newImg.src = imageSrc
+    }
+
     modalName.textContent = product.querySelector(".product-title").textContent
 
     // Format giá
@@ -344,8 +421,25 @@ document.addEventListener("DOMContentLoaded", () => {
           modalColors.querySelectorAll(".color-option").forEach((opt) => opt.classList.remove("active"))
           // Thêm active vào màu được chọn
           this.classList.add("active")
-          // Cập nhật hình ảnh
-          modalImage.src = this.dataset.imageUrl
+
+          // Cập nhật hình ảnh với hiệu ứng loading
+          const imageUrl = this.dataset.imageUrl
+          modalImage.style.opacity = "0.5"
+
+          if (preloadedImages[imageUrl] && preloadedImages[imageUrl].complete) {
+            setTimeout(() => {
+              modalImage.src = imageUrl
+              modalImage.style.opacity = "1"
+            }, 200)
+          } else {
+            const newImg = new Image()
+            newImg.onload = () => {
+              modalImage.src = imageUrl
+              modalImage.style.opacity = "1"
+              preloadedImages[imageUrl] = newImg
+            }
+            newImg.src = imageUrl
+          }
         })
         modalColors.appendChild(colorClone)
       })
@@ -387,6 +481,18 @@ document.addEventListener("DOMContentLoaded", () => {
   displayGroupedProducts = () => {
     originalDisplayGroupedProducts()
     setupProductImageClickEvents()
+  }
+
+  // Thêm hàm tải trước tất cả ảnh của sản phẩm
+  function preloadAllProductImages() {
+    console.log("Preloading all product images...")
+    if (allProducts && allProducts.length > 0) {
+      allProducts.forEach((product) => {
+        if (product.imageUrl) {
+          preloadImage(product.imageUrl)
+        }
+      })
+    }
   }
 })
 
