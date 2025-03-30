@@ -48,6 +48,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
               return {
                 ...product,
+                imageUrl: `images/${product.imageUrl}`,
                 price: Number.parseFloat(product.price),
                 color: color,
               }
