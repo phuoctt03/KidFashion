@@ -1,0 +1,565 @@
+/* Biến CSS */
+:root {
+  --primary-color: #4361ee;
+  --primary-hover: #3a56d4;
+  --secondary-color: #6c757d;
+  --success-color: #2ecc71;
+  --info-color: #3498db;
+  --warning-color: #f39c12;
+  --danger-color: #e74c3c;
+  --light-color: #f8f9fa;
+  --dark-color: #343a40;
+  --border-color: #e9ecef;
+  --bg-color: #f8f9fc;
+  --card-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.1);
+  --transition: all 0.3s ease;
+}
+
+/* Reset và cài đặt cơ bản */
+body {
+  font-family: "Nunito", -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  background-color: var(--bg-color);
+  color: var(--dark-color);
+  font-size: 16px;
+  line-height: 1.5;
+  margin: 0;
+  padding: 0;
+}
+
+/* Navbar */
+.navbar {
+  background-color: white;
+  box-shadow: var(--card-shadow);
+  position: sticky;
+  top: 0;
+  z-index: 1030;
+}
+
+.navbar-brand {
+  font-weight: 700;
+  font-size: 1.2rem;
+  color: var(--primary-color);
+}
+
+.navbar-brand i {
+  color: var(--primary-color);
+}
+
+/* Buttons */
+.btn {
+  border-radius: 0.35rem;
+  font-weight: 600;
+  transition: var(--transition);
+}
+
+.btn-primary {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-primary:hover,
+.btn-primary:focus {
+  background-color: var(--primary-hover);
+  border-color: var(--primary-hover);
+}
+
+.btn-outline-primary {
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+.btn-outline-primary:hover,
+.btn-outline-primary:focus {
+  background-color: var(--primary-color);
+  border-color: var(--primary-color);
+  color: white;
+}
+
+.btn-outline-secondary {
+  color: var(--secondary-color);
+  border-color: var(--secondary-color);
+}
+
+.btn-outline-secondary:hover,
+.btn-outline-secondary:focus {
+  background-color: var(--secondary-color);
+  border-color: var(--secondary-color);
+  color: white;
+}
+
+.btn-outline-danger {
+  color: var(--danger-color);
+  border-color: var(--danger-color);
+}
+
+.btn-outline-danger:hover,
+.btn-outline-danger:focus {
+  background-color: var(--danger-color);
+  border-color: var(--danger-color);
+  color: white;
+}
+
+.btn-sm {
+  font-size: 0.85rem;
+  padding: 0.25rem 0.5rem;
+}
+
+/* Sidebar */
+.admin-menu {
+  padding: 0;
+}
+
+.admin-menu .list-group-item {
+  border: none;
+  border-radius: 0.35rem;
+  margin-bottom: 0.5rem;
+  color: var(--secondary-color);
+  transition: var(--transition);
+  padding: 0.75rem 1rem;
+}
+
+.admin-menu .list-group-item:hover,
+.admin-menu .list-group-item.active {
+  background-color: rgba(67, 97, 238, 0.1);
+  color: var(--primary-color);
+}
+
+.admin-menu .list-group-item.active {
+  font-weight: 700;
+}
+
+.admin-menu .list-group-item i {
+  margin-right: 0.5rem;
+}
+
+/* Cards */
+.card {
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: var(--card-shadow);
+  margin-bottom: 1.5rem;
+  transition: var(--transition);
+}
+
+.card:hover {
+  box-shadow: 0 0.15rem 1.75rem 0 rgba(58, 59, 69, 0.15);
+}
+
+.card-header {
+  background-color: white;
+  border-bottom: 1px solid var(--border-color);
+  padding: 1rem 1.25rem;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  border-top-left-radius: 0.5rem !important;
+  border-top-right-radius: 0.5rem !important;
+}
+
+.card-header h5 {
+  margin: 0;
+  font-weight: 700;
+  color: var(--dark-color);
+}
+
+.card-body {
+  padding: 1.25rem;
+}
+
+/* Section Titles */
+.section-title {
+  font-weight: 700;
+  color: var(--dark-color);
+  margin-bottom: 0;
+}
+
+/* Tables */
+.table-responsive {
+  overflow-x: auto;
+  -webkit-overflow-scrolling: touch;
+}
+
+.table {
+  width: 100%;
+  margin-bottom: 0;
+  color: var(--dark-color);
+  border-collapse: collapse;
+}
+
+.table th {
+  vertical-align: bottom;
+  border-bottom: 2px solid var(--border-color);
+  padding: 0.75rem;
+  text-align: left;
+  font-weight: 700;
+  background-color: rgba(67, 97, 238, 0.05);
+}
+
+.table td {
+  padding: 0.75rem;
+  vertical-align: middle;
+  border-top: 1px solid var(--border-color);
+}
+
+.table-hover tbody tr:hover {
+  background-color: rgba(67, 97, 238, 0.05);
+}
+
+/* Product Image */
+.product-img {
+  width: 60px;
+  height: 60px;
+  object-fit: cover;
+  border-radius: 0.25rem;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.product-img:hover {
+  transform: scale(1.05);
+}
+
+/* Color Dots */
+.color-dot {
+  display: inline-block;
+  width: 20px;
+  height: 20px;
+  border-radius: 50%;
+  margin-right: 5px;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+.color-dot:hover {
+  transform: scale(1.2);
+}
+
+/* Action Buttons */
+.btn-action {
+  width: 32px;
+  height: 32px;
+  padding: 0;
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 0.25rem;
+  border-radius: 0.25rem;
+}
+
+/* Forms */
+.form-label {
+  font-weight: 600;
+  margin-bottom: 0.5rem;
+  display: block;
+  color: var(--dark-color);
+}
+
+.form-control,
+.form-select {
+  display: block;
+  width: 100%;
+  padding: 0.375rem 0.75rem;
+  font-size: 1rem;
+  line-height: 1.5;
+  color: var(--dark-color);
+  background-color: #fff;
+  background-clip: padding-box;
+  border: 1px solid var(--border-color);
+  border-radius: 0.35rem;
+  transition: var(--transition);
+}
+
+.form-control:focus,
+.form-select:focus {
+  color: var(--dark-color);
+  background-color: #fff;
+  border-color: var(--primary-color);
+  outline: 0;
+  box-shadow: 0 0 0 0.2rem rgba(67, 97, 238, 0.25);
+}
+
+.form-text {
+  display: block;
+  margin-top: 0.25rem;
+  font-size: 0.875em;
+  color: var(--secondary-color);
+}
+
+/* Image Preview */
+.img-thumbnail {
+  border-radius: 0.35rem;
+  border: 1px solid var(--border-color);
+  transition: var(--transition);
+}
+
+/* Category List */
+.category-item {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  transition: var(--transition);
+}
+
+.category-item:hover {
+  background-color: rgba(67, 97, 238, 0.05);
+}
+
+.category-count {
+  background-color: var(--primary-color);
+  color: white;
+  border-radius: 50%;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 0.75rem;
+}
+
+/* Toast Notifications */
+.toast-container {
+  position: fixed;
+  bottom: 20px;
+  right: 20px;
+  z-index: 1060;
+}
+
+.toast {
+  max-width: 350px;
+  background-color: white;
+  border-radius: 0.35rem;
+  box-shadow: 0 0.25rem 0.75rem rgba(0, 0, 0, 0.1);
+  backdrop-filter: blur(10px);
+  opacity: 0;
+  transition: opacity 0.15s linear;
+}
+
+.toast.show {
+  opacity: 1;
+}
+
+.toast-header {
+  display: flex;
+  align-items: center;
+  padding: 0.5rem 0.75rem;
+  color: var(--dark-color);
+  background-color: rgba(255, 255, 255, 0.85);
+  background-clip: padding-box;
+  border-bottom: 1px solid rgba(0, 0, 0, 0.05);
+  border-top-left-radius: calc(0.35rem - 1px);
+  border-top-right-radius: calc(0.35rem - 1px);
+}
+
+.toast-body {
+  padding: 0.75rem;
+}
+
+.toast-success {
+  border-left: 4px solid var(--success-color);
+}
+
+.toast-warning {
+  border-left: 4px solid var(--warning-color);
+}
+
+.toast-error {
+  border-left: 4px solid var(--danger-color);
+}
+
+/* Modals */
+.modal-content {
+  border: none;
+  border-radius: 0.5rem;
+  box-shadow: var(--card-shadow);
+}
+
+.modal-header {
+  border-bottom: 1px solid var(--border-color);
+  background-color: white;
+  border-top-left-radius: 0.5rem;
+  border-top-right-radius: 0.5rem;
+}
+
+.modal-footer {
+  border-top: 1px solid var(--border-color);
+  background-color: white;
+  border-bottom-left-radius: 0.5rem;
+  border-bottom-right-radius: 0.5rem;
+}
+
+.modal-title {
+  font-weight: 700;
+  color: var(--dark-color);
+}
+
+/* Loading Spinner */
+.loading-spinner {
+  display: inline-block;
+  width: 1rem;
+  height: 1rem;
+  border: 2px solid rgba(0, 0, 0, 0.1);
+  border-left-color: var(--primary-color);
+  border-radius: 50%;
+  animation: spinner 0.75s linear infinite;
+}
+
+@keyframes spinner {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.btn-loading {
+  position: relative;
+  pointer-events: none;
+}
+
+.btn-loading .loading-spinner {
+  position: absolute;
+  top: 50%;
+  left: 50%;
+  margin-top: -0.5rem;
+  margin-left: -0.5rem;
+}
+
+.btn-loading .btn-text {
+  opacity: 0;
+}
+
+/* Responsive Styles */
+@media (max-width: 991.98px) {
+  .navbar-brand {
+    font-size: 1rem;
+  }
+
+  .btn-sm {
+    font-size: 0.8rem;
+    padding: 0.2rem 0.4rem;
+  }
+}
+
+@media (max-width: 767.98px) {
+  .section-title {
+    font-size: 1.5rem;
+  }
+
+  .card-body {
+    padding: 1rem;
+  }
+
+  .table th,
+  .table td {
+    padding: 0.5rem;
+  }
+}
+
+@media (max-width: 575.98px) {
+  .navbar-brand {
+    font-size: 0.9rem;
+  }
+
+  .d-flex.gap-2 {
+    flex-direction: column;
+    gap: 0.5rem !important;
+  }
+
+  .input-group {
+    width: 100%;
+  }
+
+  #add-product-btn {
+    width: 100%;
+  }
+
+  .product-img {
+    width: 40px;
+    height: 40px;
+  }
+}
+
+/* GitHub Token Input */
+.github-token-container {
+  position: relative;
+}
+
+.github-token-container .toggle-password {
+  position: absolute;
+  right: 10px;
+  top: 50%;
+  transform: translateY(-50%);
+  background: none;
+  border: none;
+  cursor: pointer;
+  color: var(--secondary-color);
+}
+
+.github-token-container .toggle-password:hover {
+  color: var(--primary-color);
+}
+
+/* Animation */
+/* Thay đổi CSS cho admin-section để ẩn tất cả các section mặc định */
+.admin-section {
+  display: none;
+  animation: fadeIn 0.3s ease forwards;
+}
+
+.admin-section.active {
+  display: block;
+}
+
+@keyframes fadeIn {
+  from {
+    opacity: 0;
+    transform: translateY(10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+/* Progress Bar */
+.upload-progress {
+  height: 5px;
+  border-radius: 5px;
+  background-color: #e9ecef;
+  margin-top: 10px;
+  overflow: hidden;
+}
+
+.upload-progress-bar {
+  height: 100%;
+  background-color: var(--primary-color);
+  width: 0;
+  transition: width 0.3s ease;
+}
+
+/* Token Input Styling */
+#github-token {
+  letter-spacing: 0.1em;
+  font-family: monospace;
+}
+
+/* Settings Button */
+#settings-btn {
+  background-color: white;
+  color: var(--primary-color);
+  border-color: var(--primary-color);
+}
+
+#settings-btn:hover {
+  background-color: var(--primary-color);
+  color: white;
+}
+
+/* Home Button */
+.btn-outline-dark {
+  color: var(--dark-color);
+  border-color: var(--dark-color);
+}
+
+.btn-outline-dark:hover {
+  background-color: var(--dark-color);
+  color: white;
+}

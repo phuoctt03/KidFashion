@@ -84,6 +84,7 @@ document.addEventListener("DOMContentLoaded", () => {
           category: product.category,
           price: product.price,
           imageUrl: product.imageUrl,
+          description: product.description, // Add this line to include description
           variants: [],
         }
       }
@@ -383,6 +384,14 @@ document.addEventListener("DOMContentLoaded", () => {
     const modalPrice = document.getElementById("modalProductPrice")
     const modalColors = document.getElementById("modalProductColors")
 
+    // Get product data
+    const productName = product.querySelector(".product-title").textContent
+    const productPrice = product.querySelector(".product-price").textContent
+
+    // Find the product in our data to get the description
+    const productData = filteredProducts.find((p) => p.nameProduct === productName)
+    const productDescription = productData ? productData.description : ""
+
     // Cập nhật thông tin sản phẩm trong modal
     const imageSrc = selectedColor ? selectedColor.dataset.imageUrl : product.querySelector(".product-img").src
 
@@ -391,8 +400,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
     // Cập nhật ảnh với hiệu ứng loading
     if (preloadedImages[imageSrc] && preloadedImages[imageSrc].complete) {
-      modalImage.src = imageSrc
       setTimeout(() => {
+        modalImage.src = imageSrc
         modalImage.style.opacity = "1"
       }, 200)
     } else {
@@ -405,14 +414,19 @@ document.addEventListener("DOMContentLoaded", () => {
       newImg.src = imageSrc
     }
 
-    modalName.textContent = product.querySelector(".product-title").textContent
+    modalName.textContent = productName
+    modalPrice.textContent = productPrice
 
-    // Format giá
-    const priceText = product.querySelector(".product-price").textContent
-    modalPrice.textContent = priceText
+    // Add description to modal
+    const modalDescription = document.getElementById("modalProductDescription")
+    if (modalDescription) {
+      modalDescription.textContent = productDescription
+    }
 
-    // Thêm các tùy chọn màu sắc
+    // Xóa các tùy chọn màu sắc hiện tại
     modalColors.innerHTML = ""
+
+    // Thêm các tùy chọn màu sắc mới
     const colorOptions = product.querySelectorAll(".color-option")
     if (colorOptions.length > 0) {
       colorOptions.forEach((option) => {
