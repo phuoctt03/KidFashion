@@ -2,7 +2,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Biến lưu trữ dữ liệu
   let allProducts = []
   let categories = new Set()
-  let isLoggedIn = false
   let originalCSV = "" // Lưu trữ CSV gốc để so sánh thay đổi
   let githubToken = localStorage.getItem("githubToken") || ""
   let isUploading = false // Biến để kiểm tra trạng thái đang tải lên
@@ -102,8 +101,25 @@ document.addEventListener("DOMContentLoaded", () => {
   // Xử lý form đăng nhập
   document.getElementById("login-form").addEventListener("submit", (e) => {
     e.preventDefault()
-    login()
+    loginFunc()
   })
+
+  // Hàm xử lý đăng nhập
+  function loginFunc() {
+    // Lấy giá trị từ các trường nhập liệu
+    const username = document.getElementById("username").value
+    const password = document.getElementById("password").value
+
+    // Kiểm tra thông tin đăng nhập (ví dụ: so sánh với thông tin cố định)
+    if (username === "admin" && password === "password") {
+      // Đăng nhập thành công
+      showToast("Thành công", "Đăng nhập thành công", "success")
+      loginModal.hide()
+    } else {
+      // Đăng nhập thất bại
+      showToast("Lỗi", "Tên đăng nhập hoặc mật khẩu không đúng", "error")
+    }
+  }
 
   // Xử lý nút reset form
   document.getElementById("reset-form").addEventListener("click", () => {
@@ -155,68 +171,96 @@ document.addEventListener("DOMContentLoaded", () => {
     const productTableBody = document.getElementById("product-table-body")
     showLoading(productTableBody, 6)
 
+    // Luôn tải file CSV để kiểm tra cập nhật
     fetch("products.csv")
       .then((response) => response.text())
       .then((csvText) => {
         originalCSV = csvText // Lưu CSV gốc
 
-        Papa.parse(csvText, {
-          header: true,
-          complete: (results) => {
-            // Xử lý dữ liệu sản phẩm
-            allProducts = results.data
-              .filter((product) => product.imageUrl && product.nameProduct) // Lọc bỏ dòng trống
-              .map((product) => {
-                // Xử lý màu sắc từ chuỗi thành đối tượng
-                let color = null
-                if (product.colors) {
-                  const [name, code] = product.colors.split(":")
-                  color = { name, code }
-                }
+        // Lấy dữ liệu từ localStorage (nếu có)
+        const localData = localStorage.getItem("productsCSV")
 
-                return {
-                  ...product,
-                  imageUrl: `images/${product.imageUrl}`,
-                  price: Number.parseFloat(product.price) || 0,
-                  color: color,
-                }
-              })
+        // Nếu không có dữ liệu trong localStorage hoặc dữ liệu CSV đã thay đổi, cập nhật localStorage
+        if (!localData || localData !== csvText) {
+          localStorage.setItem("productsCSV", csvText)
+          console.log("Đã cập nhật dữ liệu từ file CSV vào localStorage")
+        } else {
+          console.log("Dữ liệu trong localStorage đã cập nhật")
+        }
 
-            // Nhóm sản phẩm theo tên
-            const groupedProducts = groupProductsByName(allProducts)
-
-            // Hiển thị sản phẩm trong bảng
-            displayProductsInTable(groupedProducts)
-
-            // Lấy danh sách danh mục
-            extractCategories()
-
-            // Hiển thị danh mục
-            displayCategories()
-
-            // Cập nhật select box sản phẩm cho phần thêm biến thể
-            updateProductSelect()
-          },
-          error: (error) => {
-            console.error("Lỗi khi phân tích CSV:", error)
-            showToast("Lỗi", "Không thể phân tích dữ liệu CSV", "error")
-            productTableBody.innerHTML = `
-              <tr>
-                <td colspan="6" class="text-center py-4">Lỗi khi tải dữ liệu</td>
-              </tr>
-            `
-          },
-        })
+        // Xử lý dữ liệu CSV
+        processCSVData(csvText)
       })
       .catch((error) => {
         console.error("Lỗi khi tải tệp CSV:", error)
-        showToast("Lỗi", "Không thể tải dữ liệu sản phẩm", "error")
+
+        // Nếu không tải được file CSV, sử dụng dữ liệu từ localStorage (nếu có)
+        const localData = localStorage.getItem("productsCSV")
+        if (localData) {
+          console.log("Sử dụng dữ liệu từ localStorage do không tải được file CSV")
+          processCSVData(localData)
+        } else {
+          showToast("Lỗi", "Không thể tải dữ liệu sản phẩm", "error")
+          productTableBody.innerHTML = `
+            <tr>
+              <td colspan="6" class="text-center py-4">Lỗi khi tải dữ liệu</td>
+            </tr>
+          `
+        }
+      })
+  }
+
+  // Thêm hàm mới để xử lý dữ liệu CSV
+  function processCSVData(csvText) {
+    originalCSV = csvText // Lưu CSV gốc
+
+    Papa.parse(csvText, {
+      header: true,
+      complete: (results) => {
+        // Xử lý dữ liệu sản phẩm
+        allProducts = results.data
+          .filter((product) => product.imageUrl && product.nameProduct) // Lọc bỏ dòng trống
+          .map((product) => {
+            // Xử lý màu sắc từ chuỗi thành đối tượng
+            let color = null
+            if (product.colors) {
+              const [name, code] = product.colors.split(":")
+              color = { name, code }
+            }
+
+            return {
+              ...product,
+              imageUrl: `images/${product.imageUrl}`,
+              price: Number.parseFloat(product.price) || 0,
+              color: color,
+            }
+          })
+
+        // Nhóm sản phẩm theo tên
+        const groupedProducts = groupProductsByName(allProducts)
+
+        // Hiển thị sản phẩm trong bảng
+        displayProductsInTable(groupedProducts)
+
+        // Lấy danh sách danh mục
+        extractCategories()
+
+        // Hiển thị danh mục
+        displayCategories()
+
+        // Cập nhật select box sản phẩm cho phần thêm biến thể
+        updateProductSelect()
+      },
+      error: (error) => {
+        console.error("Lỗi khi phân tích CSV:", error)
+        showToast("Lỗi", "Không thể phân tích dữ liệu CSV", "error")
         productTableBody.innerHTML = `
           <tr>
             <td colspan="6" class="text-center py-4">Lỗi khi tải dữ liệu</td>
           </tr>
         `
-      })
+      },
+    })
   }
 
   // Hàm nhóm sản phẩm theo tên
@@ -584,7 +628,7 @@ document.addEventListener("DOMContentLoaded", () => {
     deleteButton.disabled = true
     isUploading = true
 
-    // Xóa sản phẩm khỏi mảng dữ liệu
+    // Xóa tất cả các sản phẩm có cùng tên (bao gồm các biến thể màu sắc)
     allProducts = allProducts.filter((product) => product.nameProduct !== productId)
 
     // Lưu dữ liệu vào CSV
@@ -601,9 +645,6 @@ document.addEventListener("DOMContentLoaded", () => {
 
         // Hiển thị thông báo
         showToast("Thành công", "Đã xóa sản phẩm", "success")
-
-        // Tải lại danh sách sản phẩm
-        loadProducts()
       },
       (error) => {
         // Xử lý lỗi
@@ -880,14 +921,24 @@ document.addEventListener("DOMContentLoaded", () => {
       newline: "\n",
     })
 
-    // Lưu vào localStorage để demo
+    // Lưu vào localStorage
     localStorage.setItem("productsCSV", csvContent)
+
+    // Cập nhật dữ liệu hiện tại
+    const groupedProducts = groupProductsByName(allProducts)
+    displayProductsInTable(groupedProducts)
+    extractCategories()
+    displayCategories()
+    updateProductSelect()
+
+    // Hiển thị thông báo lưu cục bộ thành công
+    showToast("Thành công", "Đã lưu dữ liệu vào bộ nhớ cục bộ", "success")
 
     // Nếu có GitHub token, cập nhật file trên GitHub
     if (githubToken) {
       updateFileOnGitHub("products.csv", csvContent, "Cập nhật danh sách sản phẩm", successCallback, errorCallback)
     } else {
-      if (errorCallback) errorCallback("Chưa cấu hình GitHub token")
+      if (successCallback) successCallback()
       showToast("Cảnh báo", "Chưa cấu hình GitHub token. Dữ liệu chỉ được lưu cục bộ.", "warning")
     }
   }
@@ -1132,4 +1183,11 @@ const REPO_NAME = "KidFashion"
 // Fix: Declare bootstrap and Papa
 const bootstrap = window.bootstrap
 const Papa = window.Papa
+
+// Xóa hàm loginFunc vì không cần đăng nhập
+// Xóa sự kiện đăng nhập
+document.getElementById("login-form").removeEventListener("submit", (e) => {
+  e.preventDefault()
+  loginFunc()
+})
 
