@@ -1,33 +1,32 @@
-"imageUrl","nameProduct","category","price","description","colors"
-"babythree1.jpg","Bộ Váy Baby Three cho bé gái","Váy","139000","Bộ váy xinh xắn với chất liệu cotton mềm mại, thoáng mát. Thiết kế dễ thương phù hợp cho bé từ 1-5 tuổi.","Hồng:#e91f83"
-"babythree1-1.jpg","Bộ Váy Baby Three cho bé gái","Váy","139000","Bộ váy xinh xắn với chất liệu cotton mềm mại, thoáng mát. Thiết kế dễ thương phù hợp cho bé từ 1-5 tuổi.","Cam:#faa9a6"
-"babythree1-2.jpg","Bộ Váy Baby Three cho bé gái","Váy","139000","Bộ váy xinh xắn với chất liệu cotton mềm mại, thoáng mát. Thiết kế dễ thương phù hợp cho bé từ 1-5 tuổi.","Trắng:#f2f7fd"
-"babythree2.jpg","Bộ Váy Baby Three cho bé gái mẫu 2","Váy","139000","Thiết kế thời trang với họa tiết đáng yêu, chất liệu cotton cao cấp giúp bé thoải mái vận động cả ngày.","Cam:#faa9a6"
-"babythree2-1.jpg","Bộ Váy Baby Three cho bé gái mẫu 2","Váy","139000","Thiết kế thời trang với họa tiết đáng yêu, chất liệu cotton cao cấp giúp bé thoải mái vận động cả ngày.","Hồng:#e91f83"
-"bobetrai1.jpg","Bộ thời trang bé trai","Bộ bé trai","159000","Bộ quần áo thể thao năng động cho bé trai, chất liệu thun co giãn tốt, thoáng khí và dễ vận động.","Xanh:#526d8a"
-"bobetrai1-1.jpg","Bộ thời trang bé trai","Bộ bé trai","159000","Bộ quần áo thể thao năng động cho bé trai, chất liệu thun co giãn tốt, thoáng khí và dễ vận động.","Xanh:#0e223a"
-"bobetrai1-2.jpg","Bộ thời trang bé trai","Bộ bé trai","159000","Bộ quần áo thể thao năng động cho bé trai, chất liệu thun co giãn tốt, thoáng khí và dễ vận động.","Đen:#161616"
-"bososinh1.jpg","Bộ thời trang trẻ em","Bộ trẻ em","109000","Bộ quần áo cotton mềm mại, an toàn cho làn da nhạy cảm của bé. Thiết kế rộng rãi, thoải mái cho bé vận động.","Xám:#807474"
-"bososinh1-1.jpg","Bộ thời trang trẻ em","Bộ trẻ em","109000","Bộ quần áo cotton mềm mại, an toàn cho làn da nhạy cảm của bé. Thiết kế rộng rãi, thoải mái cho bé vận động.","Nâu:#8d5a3b"
-"bososinh1-2.jpg","Bộ thời trang trẻ em","Bộ trẻ em","109000","Bộ quần áo cotton mềm mại, an toàn cho làn da nhạy cảm của bé. Thiết kế rộng rãi, thoải mái cho bé vận động.","Đen:#32323e"
-"botreem1.jpg","Bộ thời trang cho bé","Bộ bé sơ sinh","109000","Bộ quần áo sơ sinh chất liệu 100% cotton organic, mềm mịn, không gây kích ứng da. Phù hợp cho bé từ 0-12 tháng.","Hồng:#bf7a71"
-"botreem1-1.jpg","Bộ thời trang cho bé","Bộ bé sơ sinh","109000","Bộ quần áo sơ sinh chất liệu 100% cotton organic, mềm mịn, không gây kích ứng da. Phù hợp cho bé từ 0-12 tháng.","Tím:#c9bccd"
-"khunglong-blue.jpg","Bộ khủng long bé trai","Bộ bé trai","139000","Bộ quần áo họa tiết khủng long ngộ nghĩnh, chất liệu cotton thoáng mát. Thiết kế năng động cho bé trai từ 2-7 tuổi.","Xanh dương:#0187fd"
-"khunglong-green.jpg","Bộ khủng long bé trai","Bộ bé trai","139000","Bộ quần áo họa tiết khủng long ngộ nghĩnh, chất liệu cotton thoáng mát. Thiết kế năng động cho bé trai từ 2-7 tuổi.","Xanh lục:#009f73"
-"khunglong-orange.jpg","Bộ khủng long bé trai","Bộ bé trai","139000","Bộ quần áo họa tiết khủng long ngộ nghĩnh, chất liệu cotton thoáng mát. Thiết kế năng động cho bé trai từ 2-7 tuổi.","Cam:#fc391b"
-"khunglong-red.jpg","Bộ khủng long bé trai","Bộ bé trai","139000","Bộ quần áo họa tiết khủng long ngộ nghĩnh, chất liệu cotton thoáng mát. Thiết kế năng động cho bé trai từ 2-7 tuổi.","Đỏ:#ce0000"
-"khunglong-yellow.jpg","Bộ khủng long bé trai","Bộ bé trai","139000","Bộ quần áo họa tiết khủng long ngộ nghĩnh, chất liệu cotton thoáng mát. Thiết kế năng động cho bé trai từ 2-7 tuổi.","Vàng:#febc1d"
-"mau1-0.jpg","Bộ Cộc Baby Three Cho Bé Gái","Bộ bé gái","129000","Bộ quần áo mùa hè thoáng mát với họa tiết dễ thương. Chất liệu cotton mềm mại, thấm hút mồ hôi tốt cho bé gái.","Cam:#faa9a6"
-"mau1-1.jpg","Bộ Cộc Baby Three Cho Bé Gái","Bộ bé gái","129000","Bộ quần áo mùa hè thoáng mát với họa tiết dễ thương. Chất liệu cotton mềm mại, thấm hút mồ hôi tốt cho bé gái.","Hồng:#e91f83"
-"mau2-0.jpg","Bộ Cộc Baby Three Cho Bé Gái mẫu 2","Bộ bé gái","129000","Bộ quần áo cộc tay phong cách thời trang, chất liệu cao cấp, thoáng khí. Thiết kế dễ thương cho bé gái từ 1-6 tuổi.","Tím:#b586d6"
-"mau2-1.jpg","Bộ Cộc Baby Three Cho Bé Gái mẫu 2","Bộ bé gái","129000","Bộ quần áo cộc tay phong cách thời trang, chất liệu cao cấp, thoáng khí. Thiết kế dễ thương cho bé gái từ 1-6 tuổi.","Hồng:#fe9fd4"
-"mau2-2.jpg","Bộ Cộc Baby Three Cho Bé Gái mẫu 2","Bộ bé gái","129000","Bộ quần áo cộc tay phong cách thời trang, chất liệu cao cấp, thoáng khí. Thiết kế dễ thương cho bé gái từ 1-6 tuổi.","Nâu:#8d5a3b"
-"mau3-0.jpg","Bộ Cộc Baby Three Cho Bé Gái mẫu 3","Bộ bé gái","129000","Bộ quần áo mùa hè với thiết kế thời trang, chất liệu cotton mềm mại, co giãn tốt. Phù hợp cho bé gái từ 1-7 tuổi.","Tím:#b586d6"
-"mau3-1.jpg","Bộ Cộc Baby Three Cho Bé Gái mẫu 3","Bộ bé gái","129000","Bộ quần áo mùa hè với thiết kế thời trang, chất liệu cotton mềm mại, co giãn tốt. Phù hợp cho bé gái từ 1-7 tuổi.","Hồng:#f38d98"
-"mau3-2.jpg","Bộ Cộc Baby Three Cho Bé Gái mẫu 3","Bộ bé gái","129000","Bộ quần áo mùa hè với thiết kế thời trang, chất liệu cotton mềm mại, co giãn tốt. Phù hợp cho bé gái từ 1-7 tuổi.","Hồng:#f490c2"
-"mau3-3.jpg","Bộ Cộc Baby Three Cho Bé Gái mẫu 3","Bộ bé gái","129000","Bộ quần áo mùa hè với thiết kế thời trang, chất liệu cotton mềm mại, co giãn tốt. Phù hợp cho bé gái từ 1-7 tuổi.","Cam:#fc7a62"
-"mau4-0.jpg","Bộ Cộc Labubu Cho Bé Trai","Bộ bé trai","129000","Bộ quần áo họa tiết Labubu dễ thương, chất liệu thun mềm mại, thoáng khí. Thiết kế năng động cho bé trai từ 1-7 tuổi.","Cam:#fc391b"
-"mau4-1.jpg","Bộ Cộc Labubu Cho Bé Trai","Bộ bé trai","129000","Bộ quần áo họa tiết Labubu dễ thương, chất liệu thun mềm mại, thoáng khí. Thiết kế năng động cho bé trai từ 1-7 tuổi.","Đỏ:#ce0000"
-"mau5-1.jpg","Bộ Cộc Người Nhện Cho Bé Trai","Bộ bé trai","129000","Bộ quần áo siêu nhân Người Nhện, chất liệu cotton thoáng mát. Thiết kế năng động, phù hợp cho bé trai từ 2-8 tuổi.","Cam:#fc391b"
-"mau5-2.jpg","Bộ Cộc Người Nhện Cho Bé Trai","Bộ bé trai","129000","Bộ quần áo siêu nhân Người Nhện, chất liệu cotton thoáng mát. Thiết kế năng động, phù hợp cho bé trai từ 2-8 tuổi.","Vàng:#febc1d"
-"hsahdfhakjahdsd-q1231-1743500286888.jpg","hsahdfhakjahdsd","Bộ bé gái","121123123","123123123,123123123,12312313","q1231:#a30000"
+imageUrl,nameProduct,category,price,description,colors
+babythree1.jpg,Bộ Váy Baby Three cho bé gái,Váy,139000,"Bộ váy xinh xắn với chất liệu cotton mềm mại, thoáng mát. Thiết kế dễ thương phù hợp cho bé từ 1-5 tuổi.",Hồng:#e91f83
+babythree1-1.jpg,Bộ Váy Baby Three cho bé gái,Váy,139000,"Bộ váy xinh xắn với chất liệu cotton mềm mại, thoáng mát. Thiết kế dễ thương phù hợp cho bé từ 1-5 tuổi.",Cam:#faa9a6
+babythree1-2.jpg,Bộ Váy Baby Three cho bé gái,Váy,139000,"Bộ váy xinh xắn với chất liệu cotton mềm mại, thoáng mát. Thiết kế dễ thương phù hợp cho bé từ 1-5 tuổi.",Trắng:#f2f7fd
+babythree2.jpg,Bộ Váy Baby Three cho bé gái mẫu 2,Váy,139000,"Thiết kế thời trang với họa tiết đáng yêu, chất liệu cotton cao cấp giúp bé thoải mái vận động cả ngày.",Cam:#faa9a6
+babythree2-1.jpg,Bộ Váy Baby Three cho bé gái mẫu 2,Váy,139000,"Thiết kế thời trang với họa tiết đáng yêu, chất liệu cotton cao cấp giúp bé thoải mái vận động cả ngày.",Hồng:#e91f83
+bobetrai1.jpg,Bộ thời trang bé trai,Bộ bé trai,159000,"Bộ quần áo thể thao năng động cho bé trai, chất liệu thun co giãn tốt, thoáng khí và dễ vận động.",Xanh:#526d8a
+bobetrai1-1.jpg,Bộ thời trang bé trai,Bộ bé trai,159000,"Bộ quần áo thể thao năng động cho bé trai, chất liệu thun co giãn tốt, thoáng khí và dễ vận động.",Xanh:#0e223a
+bobetrai1-2.jpg,Bộ thời trang bé trai,Bộ bé trai,159000,"Bộ quần áo thể thao năng động cho bé trai, chất liệu thun co giãn tốt, thoáng khí và dễ vận động.",Đen:#161616
+bososinh1.jpg,Bộ thời trang trẻ em,Bộ trẻ em,109000,"Bộ quần áo cotton mềm mại, an toàn cho làn da nhạy cảm của bé. Thiết kế rộng rãi, thoải mái cho bé vận động.",Xám:#807474
+bososinh1-1.jpg,Bộ thời trang trẻ em,Bộ trẻ em,109000,"Bộ quần áo cotton mềm mại, an toàn cho làn da nhạy cảm của bé. Thiết kế rộng rãi, thoải mái cho bé vận động.",Nâu:#8d5a3b
+bososinh1-2.jpg,Bộ thời trang trẻ em,Bộ trẻ em,109000,"Bộ quần áo cotton mềm mại, an toàn cho làn da nhạy cảm của bé. Thiết kế rộng rãi, thoải mái cho bé vận động.",Đen:#32323e
+botreem1.jpg,Bộ thời trang cho bé,Bộ bé sơ sinh,109000,"Bộ quần áo sơ sinh chất liệu 100% cotton organic, mềm mịn, không gây kích ứng da. Phù hợp cho bé từ 0-12 tháng.",Hồng:#bf7a71
+botreem1-1.jpg,Bộ thời trang cho bé,Bộ bé sơ sinh,109000,"Bộ quần áo sơ sinh chất liệu 100% cotton organic, mềm mịn, không gây kích ứng da. Phù hợp cho bé từ 0-12 tháng.",Tím:#c9bccd
+khunglong-blue.jpg,Bộ khủng long bé trai,Bộ bé trai,139000,"Bộ quần áo họa tiết khủng long ngộ nghĩnh, chất liệu cotton thoáng mát. Thiết kế năng động cho bé trai từ 2-7 tuổi.",Xanh dương:#0187fd
+khunglong-green.jpg,Bộ khủng long bé trai,Bộ bé trai,139000,"Bộ quần áo họa tiết khủng long ngộ nghĩnh, chất liệu cotton thoáng mát. Thiết kế năng động cho bé trai từ 2-7 tuổi.",Xanh lục:#009f73
+khunglong-orange.jpg,Bộ khủng long bé trai,Bộ bé trai,139000,"Bộ quần áo họa tiết khủng long ngộ nghĩnh, chất liệu cotton thoáng mát. Thiết kế năng động cho bé trai từ 2-7 tuổi.",Cam:#fc391b
+khunglong-red.jpg,Bộ khủng long bé trai,Bộ bé trai,139000,"Bộ quần áo họa tiết khủng long ngộ nghĩnh, chất liệu cotton thoáng mát. Thiết kế năng động cho bé trai từ 2-7 tuổi.",Đỏ:#ce0000
+khunglong-yellow.jpg,Bộ khủng long bé trai,Bộ bé trai,139000,"Bộ quần áo họa tiết khủng long ngộ nghĩnh, chất liệu cotton thoáng mát. Thiết kế năng động cho bé trai từ 2-7 tuổi.",Vàng:#febc1d
+mau1-0.jpg,Bộ Cộc Baby Three Cho Bé Gái,Bộ bé gái,129000,"Bộ quần áo mùa hè thoáng mát với họa tiết dễ thương. Chất liệu cotton mềm mại, thấm hút mồ hôi tốt cho bé gái.",Cam:#faa9a6
+mau1-1.jpg,Bộ Cộc Baby Three Cho Bé Gái,Bộ bé gái,129000,"Bộ quần áo mùa hè thoáng mát với họa tiết dễ thương. Chất liệu cotton mềm mại, thấm hút mồ hôi tốt cho bé gái.",Hồng:#e91f83
+mau2-0.jpg,Bộ Cộc Baby Three Cho Bé Gái mẫu 2,Bộ bé gái,129000,"Bộ quần áo cộc tay phong cách thời trang, chất liệu cao cấp, thoáng khí. Thiết kế dễ thương cho bé gái từ 1-6 tuổi.",Tím:#b586d6
+mau2-1.jpg,Bộ Cộc Baby Three Cho Bé Gái mẫu 2,Bộ bé gái,129000,"Bộ quần áo cộc tay phong cách thời trang, chất liệu cao cấp, thoáng khí. Thiết kế dễ thương cho bé gái từ 1-6 tuổi.",Hồng:#fe9fd4
+mau2-2.jpg,Bộ Cộc Baby Three Cho Bé Gái mẫu 2,Bộ bé gái,129000,"Bộ quần áo cộc tay phong cách thời trang, chất liệu cao cấp, thoáng khí. Thiết kế dễ thương cho bé gái từ 1-6 tuổi.",Nâu:#8d5a3b
+mau3-0.jpg,Bộ Cộc Baby Three Cho Bé Gái mẫu 3,Bộ bé gái,129000,"Bộ quần áo mùa hè với thiết kế thời trang, chất liệu cotton mềm mại, co giãn tốt. Phù hợp cho bé gái từ 1-7 tuổi.",Tím:#b586d6
+mau3-1.jpg,Bộ Cộc Baby Three Cho Bé Gái mẫu 3,Bộ bé gái,129000,"Bộ quần áo mùa hè với thiết kế thời trang, chất liệu cotton mềm mại, co giãn tốt. Phù hợp cho bé gái từ 1-7 tuổi.",Hồng:#f38d98
+mau3-2.jpg,Bộ Cộc Baby Three Cho Bé Gái mẫu 3,Bộ bé gái,129000,"Bộ quần áo mùa hè với thiết kế thời trang, chất liệu cotton mềm mại, co giãn tốt. Phù hợp cho bé gái từ 1-7 tuổi.",Hồng:#f490c2
+mau3-3.jpg,Bộ Cộc Baby Three Cho Bé Gái mẫu 3,Bộ bé gái,129000,"Bộ quần áo mùa hè với thiết kế thời trang, chất liệu cotton mềm mại, co giãn tốt. Phù hợp cho bé gái từ 1-7 tuổi.",Cam:#fc7a62
+mau4-0.jpg,Bộ Cộc Labubu Cho Bé Trai,Bộ bé trai,129000,"Bộ quần áo họa tiết Labubu dễ thương, chất liệu thun mềm mại, thoáng khí. Thiết kế năng động cho bé trai từ 1-7 tuổi.",Cam:#fc391b
+mau4-1.jpg,Bộ Cộc Labubu Cho Bé Trai,Bộ bé trai,129000,"Bộ quần áo họa tiết Labubu dễ thương, chất liệu thun mềm mại, thoáng khí. Thiết kế năng động cho bé trai từ 1-7 tuổi.",Đỏ:#ce0000
+mau5-1.jpg,Bộ Cộc Người Nhện Cho Bé Trai,Bộ bé trai,129000,"Bộ quần áo siêu nhân Người Nhện, chất liệu cotton thoáng mát. Thiết kế năng động, phù hợp cho bé trai từ 2-8 tuổi.",Cam:#fc391b
+mau5-2.jpg,Bộ Cộc Người Nhện Cho Bé Trai,Bộ bé trai,129000,"Bộ quần áo siêu nhân Người Nhện, chất liệu cotton thoáng mát. Thiết kế năng động, phù hợp cho bé trai từ 2-8 tuổi.",Vàng:#febc1d
