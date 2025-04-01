@@ -1,0 +1,417 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Quản Lý Sản Phẩm - Thời Trang Trẻ Em</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="admin-styles.css">
+</head>
+<body>
+  <!-- Thanh điều hướng -->
+  <nav class="navbar sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="bi bi-stars"></i> Thời Trang Trẻ Em - Quản Trị
+      </a>
+      <div class="d-flex">
+        <button id="settings-btn" class="btn btn-sm btn-outline-secondary me-2">
+          <i class="bi bi-gear"></i> Nhập Token
+        </button>
+        <a href="index.html" class="btn btn-sm btn-outline-dark">
+          <i class="bi bi-house"></i> Trang chủ
+        </a>
+      </div>
+    </div>
+  </nav>
+
+  <!-- Nội dung chính -->
+  <div class="container mt-4">
+    <div class="row">
+      <!-- Sidebar -->
+      <div class="col-md-3 mb-4">
+        <div class="card border-0 shadow-sm">
+          <div class="card-body">
+            <h5 class="card-title mb-3">Quản lý</h5>
+            <div class="list-group admin-menu">
+              <button class="list-group-item list-group-item-action active" data-target="product-list">
+                <i class="bi bi-grid me-2"></i> Danh sách sản phẩm
+              </button>
+              <button class="list-group-item list-group-item-action" data-target="add-product">
+                <i class="bi bi-plus-circle me-2"></i> Thêm sản phẩm mới
+              </button>
+              <button class="list-group-item list-group-item-action" data-target="add-variant">
+                <i class="bi bi-palette me-2"></i> Thêm biến thể màu sắc
+              </button>
+              <button class="list-group-item list-group-item-action" data-target="categories">
+                <i class="bi bi-tags me-2"></i> Danh mục sản phẩm
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Main content -->
+      <div class="col-md-9">
+        <!-- Product List Section -->
+        <div id="product-list" class="admin-section active">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="section-title">Danh sách sản phẩm</h3>
+            <div class="d-flex gap-2">
+              <div class="input-group">
+                <span class="input-group-text"><i class="bi bi-search"></i></span>
+                <input type="text" id="product-search" class="form-control" placeholder="Tìm kiếm sản phẩm...">
+              </div>
+              <button class="btn btn-primary" id="add-product-btn">
+                <i class="bi bi-plus-lg"></i> Thêm mới
+              </button>
+            </div>
+          </div>
+
+          <div class="card border-0 shadow-sm">
+            <div class="card-body p-0">
+              <div class="table-responsive">
+                <table class="table table-hover product-table mb-0">
+                  <thead class="table-light">
+                    <tr>
+                      <th style="width: 80px">Ảnh</th>
+                      <th>Tên sản phẩm</th>
+                      <th>Danh mục</th>
+                      <th>Giá</th>
+                      <th>Màu sắc</th>
+                      <th style="width: 120px">Thao tác</th>
+                    </tr>
+                  </thead>
+                  <tbody id="product-table-body">
+                    <!-- Products will be loaded here -->
+                    <tr>
+                      <td colspan="6" class="text-center py-4">
+                        <div class="spinner-border text-primary" role="status">
+                          <span class="visually-hidden">Đang tải...</span>
+                        </div>
+                      </td>
+                    </tr>
+                  </tbody>
+                </table>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Product Section -->
+        <div id="add-product" class="admin-section">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="section-title">Thêm sản phẩm mới</h3>
+            <button class="btn btn-outline-secondary" id="back-to-list">
+              <i class="bi bi-arrow-left"></i> Quay lại
+            </button>
+          </div>
+
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <form id="add-product-form">
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="product-name" class="form-label">Tên sản phẩm <span class="text-danger">*</span></label>
+                    <input type="text" class="form-control" id="product-name" required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="product-category" class="form-label">Danh mục <span class="text-danger">*</span></label>
+                    <select class="form-select" id="product-category" required>
+                      <option value="" selected disabled>Chọn danh mục</option>
+                      <!-- Categories will be loaded here -->
+                    </select>
+                  </div>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="product-price" class="form-label">Giá (VNĐ) <span class="text-danger">*</span></label>
+                    <input type="number" class="form-control" id="product-price" min="0" required>
+                  </div>
+                  <div class="col-md-6 mb-3">
+                    <label for="product-color" class="form-label">Màu sắc <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="product-color-name" placeholder="Tên màu" required>
+                      <input type="color" class="form-control form-control-color" id="product-color-code" value="#ff6b6b" title="Chọn màu">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="product-description" class="form-label">Mô tả sản phẩm</label>
+                  <textarea class="form-control" id="product-description" rows="4"></textarea>
+                </div>
+
+                <div class="mb-3">
+                  <label for="product-image" class="form-label">Hình ảnh sản phẩm <span class="text-danger">*</span></label>
+                  <input type="file" class="form-control" id="product-image" accept="image/*" required>
+                  <div class="mt-2">
+                    <img id="image-preview" src="#" alt="Preview" class="img-thumbnail d-none" style="max-height: 200px">
+                  </div>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <button type="button" class="btn btn-outline-secondary" id="reset-form">Làm mới</button>
+                  <button type="submit" class="btn btn-primary">Lưu sản phẩm</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Add Variant Section -->
+        <div id="add-variant" class="admin-section">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="section-title">Thêm biến thể màu sắc</h3>
+            <button class="btn btn-outline-secondary" id="back-to-list-from-variant">
+              <i class="bi bi-arrow-left"></i> Quay lại
+            </button>
+          </div>
+
+          <div class="card border-0 shadow-sm">
+            <div class="card-body">
+              <form id="add-variant-form">
+                <div class="mb-3">
+                  <label for="variant-product" class="form-label">Chọn sản phẩm <span class="text-danger">*</span></label>
+                  <select class="form-select" id="variant-product" required>
+                    <option value="" selected disabled>Chọn sản phẩm</option>
+                    <!-- Products will be loaded here -->
+                  </select>
+                </div>
+
+                <div class="row">
+                  <div class="col-md-6 mb-3">
+                    <label for="variant-color" class="form-label">Màu sắc mới <span class="text-danger">*</span></label>
+                    <div class="input-group">
+                      <input type="text" class="form-control" id="variant-color-name" placeholder="Tên màu" required>
+                      <input type="color" class="form-control form-control-color" id="variant-color-code" value="#ff6b6b" title="Chọn màu">
+                    </div>
+                  </div>
+                </div>
+
+                <div class="mb-3">
+                  <label for="variant-image" class="form-label">Hình ảnh biến thể <span class="text-danger">*</span></label>
+                  <input type="file" class="form-control" id="variant-image" accept="image/*" required>
+                  <div class="mt-2">
+                    <img id="variant-image-preview" src="#" alt="Preview" class="img-thumbnail d-none" style="max-height: 200px">
+                  </div>
+                </div>
+
+                <div class="d-grid gap-2 d-md-flex justify-content-md-end">
+                  <button type="button" class="btn btn-outline-secondary" id="reset-variant-form">Làm mới</button>
+                  <button type="submit" class="btn btn-primary">Lưu biến thể</button>
+                </div>
+              </form>
+            </div>
+          </div>
+        </div>
+
+        <!-- Categories Section -->
+        <div id="categories" class="admin-section">
+          <div class="d-flex justify-content-between align-items-center mb-3">
+            <h3 class="section-title">Danh mục sản phẩm</h3>
+            <button class="btn btn-primary" id="add-category-btn">
+              <i class="bi bi-plus-lg"></i> Thêm danh mục
+            </button>
+          </div>
+
+          <div class="row">
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title">Danh sách danh mục</h5>
+                  <ul class="list-group" id="category-list">
+                    <!-- Categories will be loaded here -->
+                    <li class="list-group-item d-flex justify-content-between align-items-center">
+                      <span>Đang tải...</span>
+                    </li>
+                  </ul>
+                </div>
+              </div>
+            </div>
+            <div class="col-md-6">
+              <div class="card border-0 shadow-sm">
+                <div class="card-body">
+                  <h5 class="card-title">Thêm danh mục mới</h5>
+                  <form id="add-category-form">
+                    <div class="mb-3">
+                      <label for="category-name" class="form-label">Tên danh mục</label>
+                      <input type="text" class="form-control" id="category-name" required>
+                    </div>
+                    <div class="d-grid">
+                      <button type="submit" class="btn btn-primary">Thêm danh mục</button>
+                    </div>
+                  </form>
+                </div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Edit Product Modal -->
+  <div class="modal fade" id="editProductModal" tabindex="-1" aria-labelledby="editProductModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-lg">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="editProductModalLabel">Chỉnh sửa sản phẩm</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="edit-product-form">
+            <input type="hidden" id="edit-product-id">
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="edit-product-name" class="form-label">Tên sản phẩm <span class="text-danger">*</span></label>
+                <input type="text" class="form-control" id="edit-product-name" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="edit-product-category" class="form-label">Danh mục <span class="text-danger">*</span></label>
+                <select class="form-select" id="edit-product-category" required>
+                  <!-- Categories will be loaded here -->
+                </select>
+              </div>
+            </div>
+
+            <div class="row">
+              <div class="col-md-6 mb-3">
+                <label for="edit-product-price" class="form-label">Giá (VNĐ) <span class="text-danger">*</span></label>
+                <input type="number" class="form-control" id="edit-product-price" min="0" required>
+              </div>
+              <div class="col-md-6 mb-3">
+                <label for="edit-product-color" class="form-label">Màu sắc</label>
+                <div class="input-group">
+                  <input type="text" class="form-control" id="edit-product-color-name" placeholder="Tên màu" disabled>
+                  <input type="color" class="form-control form-control-color" id="edit-product-color-code" disabled>
+                </div>
+                <small class="text-muted">Để thêm màu mới, hãy sử dụng chức năng "Thêm biến thể màu sắc"</small>
+              </div>
+            </div>
+
+            <div class="mb-3">
+              <label for="edit-product-description" class="form-label">Mô tả sản phẩm</label>
+              <textarea class="form-control" id="edit-product-description" rows="4"></textarea>
+            </div>
+
+            <div class="mb-3">
+              <label class="form-label">Hình ảnh hiện tại</label>
+              <div class="current-image-container">
+                <img id="edit-current-image" src="#" alt="Current product image" class="img-thumbnail" style="max-height: 150px">
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-outline-danger me-auto" id="delete-product-btn">Xóa sản phẩm</button>
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-primary" id="save-edit-product">Lưu thay đổi</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Login Modal -->
+  <div class="modal fade" id="loginModal" tabindex="-1" aria-labelledby="loginModalLabel" aria-hidden="true" data-bs-backdrop="static" data-bs-keyboard="false">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="loginModalLabel">Đăng nhập quản trị</h5>
+        </div>
+        <div class="modal-body">
+          <form id="login-form">
+            <div class="mb-3">
+              <label for="username" class="form-label">Tên đăng nhập</label>
+              <input type="text" class="form-control" id="username" required>
+            </div>
+            <div class="mb-3">
+              <label for="password" class="form-label">Mật khẩu</label>
+              <input type="password" class="form-control" id="password" required>
+            </div>
+            <div class="alert alert-danger d-none" id="login-error">
+              Tên đăng nhập hoặc mật khẩu không đúng!
+            </div>
+            <div class="d-grid">
+              <button type="submit" class="btn btn-primary">Đăng nhập</button>
+            </div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Confirmation Modal -->
+  <div class="modal fade" id="confirmationModal" tabindex="-1" aria-labelledby="confirmationModalLabel" aria-hidden="true">
+    <div class="modal-dialog modal-dialog-centered">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="confirmationModalLabel">Xác nhận</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <p id="confirmation-message">Bạn có chắc chắn muốn thực hiện hành động này?</p>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Hủy</button>
+          <button type="button" class="btn btn-danger" id="confirm-action">Xác nhận</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- Toast Notifications -->
+  <div class="toast-container position-fixed bottom-0 end-0 p-3">
+    <div id="toast-notification" class="toast" role="alert" aria-live="assertive" aria-atomic="true">
+      <div class="toast-header">
+        <i class="bi bi-info-circle me-2"></i>
+        <strong class="me-auto" id="toast-title">Thông báo</strong>
+        <button type="button" class="btn-close" data-bs-dismiss="toast" aria-label="Close"></button>
+      </div>
+      <div class="toast-body" id="toast-message">
+        Thao tác thành công!
+      </div>
+    </div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+  <script src="admin.js"></script>
+
+  <!-- Thêm modal cài đặt vào cuối file, trước thẻ đóng body -->
+  <!-- Modal Cài đặt -->
+  <div class="modal fade" id="settingsModal" tabindex="-1" aria-labelledby="settingsModalLabel" aria-hidden="true">
+    <div class="modal-dialog">
+      <div class="modal-content">
+        <div class="modal-header">
+          <h5 class="modal-title" id="settingsModalLabel">Nhập GitHub Token</h5>
+          <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+        </div>
+        <div class="modal-body">
+          <form id="settings-form">
+            <div class="mb-3">
+              <label for="github-token" class="form-label">GitHub Token</label>
+              <input type="password" class="form-control" id="github-token" placeholder="Nhập GitHub token">
+              <div class="form-text">
+                Token GitHub được sử dụng để tải ảnh và cập nhật dữ liệu lên repository.
+                <br>
+                Token cần có quyền <code>repo</code> để có thể tải lên file.
+                <br>
+                <a href="https://github.com/settings/tokens" target="_blank">Tạo token mới</a>
+              </div>
+            </div>
+          </form>
+        </div>
+        <div class="modal-footer">
+          <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Đóng</button>
+          <button type="button" class="btn btn-primary" id="save-settings">Lưu Token</button>
+        </div>
+      </div>
+    </div>
+  </div>
+</body>
+</html>
+
