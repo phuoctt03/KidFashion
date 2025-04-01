@@ -133,31 +133,7 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Hàm kiểm tra trạng thái đăng nhập
   function checkLoginStatus() {
-    isLoggedIn = localStorage.getItem("adminLoggedIn") === "true"
-
-    if (!isLoggedIn) {
-      loginModal.show()
-    } else {
-      loadProducts()
-    }
-  }
-
-  // Hàm đăng nhập
-  function login() {
-    const username = document.getElementById("username").value
-    const password = document.getElementById("password").value
-    const loginError = document.getElementById("login-error")
-
-    // Kiểm tra thông tin đăng nhập (demo: admin/admin)
-    if (username === "admin" && password === "admin") {
-      localStorage.setItem("adminLoggedIn", "true")
-      isLoggedIn = true
-      loginModal.hide()
-      loadProducts()
-      showToast("Đăng nhập thành công", "Chào mừng bạn đến với trang quản trị", "success")
-    } else {
-      loginError.classList.remove("d-none")
-    }
+    loadProducts()
   }
 
   // Hiển thị loading
@@ -668,7 +644,7 @@ document.addEventListener("DOMContentLoaded", () => {
     isUploading = true
 
     // Tạo tên file ảnh
-    const imageFileName = `${name.toLowerCase().replace(/\s+/g, "-")}-${colorName.toLowerCase()}-${Date.now()}.jpg`
+    const imageFileName = `${Date.now()}.jpg`
 
     // Nếu có GitHub token, tải ảnh lên GitHub
     if (githubToken) {
