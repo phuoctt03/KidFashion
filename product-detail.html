@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html lang="vi">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Chi tiết sản phẩm - Thời Trang Trẻ Em</title>
+  <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.11.1/font/bootstrap-icons.css">
+  <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@400;600;700&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+  <!-- Thanh điều hướng -->
+  <nav class="navbar sticky-top">
+    <div class="container">
+      <a class="navbar-brand" href="index.html">
+        <i class="bi bi-stars"></i> Thời Trang Trẻ Em
+      </a>
+      <a href="index.html" class="btn btn-sm btn-outline-secondary">
+        <i class="bi bi-arrow-left"></i> Quay lại
+      </a>
+    </div>
+  </nav>
+
+  <!-- Nội dung chi tiết sản phẩm -->
+  <div class="container my-4">
+    <div class="row">
+      <div class="col-md-6">
+        <div class="product-detail-image-container">
+          <img id="productDetailImage" src="/placeholder.svg" alt="Product" class="product-detail-image">
+          <div class="img-loading-overlay" id="detailImageLoading">
+            <div class="spinner-border spinner-border-sm text-primary" role="status">
+              <span class="visually-hidden">Đang tải...</span>
+            </div>
+          </div>
+        </div>
+        <div class="product-thumbnails mt-3" id="productThumbnails">
+          <!-- Thumbnails will be added here -->
+        </div>
+      </div>
+      <div class="col-md-6">
+        <div class="product-detail-info">
+          <span id="productDetailCategory" class="product-category mb-2"></span>
+          <h1 id="productDetailName" class="product-detail-title"></h1>
+          <p id="productDetailPrice" class="product-detail-price"></p>
+          
+          <div class="mb-4">
+            <h5 class="mb-2">Màu sắc</h5>
+            <div id="productDetailColors" class="color-options"></div>
+          </div>
+          
+          <div class="product-description-container mb-4">
+            <h5 class="mb-2">Mô tả sản phẩm</h5>
+            <p id="productDetailDescription" class="text-muted"></p>
+          </div>
+          
+          <div class="contact-options">
+            <h5 class="mb-3">Liên hệ đặt hàng</h5>
+            <div class="d-grid gap-2">
+              <a href="https://m.facebook.com/profile.php?id=100082706001424" target="_blank" class="btn btn-outline-primary">
+                <i class="bi bi-facebook"></i> Facebook
+              </a>
+              <a href="https://www.tiktok.com/@vthnhung4?_t=ZS-8unl6IOlsUa&_r=1" target="_blank" class="btn btn-outline-dark">
+                <i class="bi bi-tiktok"></i> TikTok
+              </a>
+              <a href="https://m.me/100082706001424" target="_blank" class="btn btn-messenger">
+                <i class="bi bi-messenger"></i> Nhắn tin hỗ trợ
+              </a>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
+    <!-- Sản phẩm liên quan -->
+    <div class="related-products mt-5">
+      <h3 class="section-title">Sản phẩm tương tự</h3>
+      <div class="row g-2" id="relatedProductsContainer">
+        <!-- Related products will be added here -->
+      </div>
+    </div>
+  </div>
+
+  <!-- Chân trang -->
+  <footer class="footer">
+    <div class="container">
+      <div class="row gy-4">
+        <div class="col-12">
+          <h5 class="footer-title">Thời Trang Trẻ Em</h5>
+          <p class="small">Cung cấp quần áo trẻ em chất lượng kết hợp giữa phong cách, thoải mái và bền bỉ.</p>
+          <h5 class="footer-title small">Liên hệ</h5>
+          <div class="social-icons mb-3">
+            <a href="https://m.facebook.com/profile.php?id=100082706001424" target="_blank"><i class="bi bi-facebook"></i></a>
+            <a href="https://www.tiktok.com/@vthnhung4?_t=ZS-8unl6IOlsUa&_r=1" target="_blank"><i class="bi bi-tiktok"></i></a>
+          </div>
+        </div>
+      </div>
+      <hr class="mt-3 mb-3">
+    </div>
+  </footer>
+
+  <!-- Nút cuộn lên đầu trang -->
+  <div class="scroll-to-top" id="scrollToTop">
+    <i class="bi bi-arrow-up"></i>
+  </div>
+
+  <!-- Overlay chuyển trang -->
+  <div class="page-transition-overlay" id="pageTransitionOverlay">
+    <div class="page-transition-spinner"></div>
+  </div>
+
+  <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/js/bootstrap.bundle.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/papaparse@5.3.2/papaparse.min.js"></script>
+  <script src="product-detail.js"></script>
+</body>
+</html>
+
