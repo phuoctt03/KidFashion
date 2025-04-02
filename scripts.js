@@ -102,7 +102,7 @@ document.addEventListener("DOMContentLoaded", () => {
     filteredProducts = Object.values(groupedProducts)
   }
 
-  // Sửa hàm displayGroupedProducts để thêm tải trước ảnh
+  // Thay đổi hàm displayGroupedProducts để thêm lazy loading và hiệu ứng loading
   function displayGroupedProducts() {
     const container = document.getElementById("products-container")
     const noResults = document.getElementById("no-results")
@@ -132,38 +132,35 @@ document.addEventListener("DOMContentLoaded", () => {
         product.variants.forEach((variant, index) => {
           const isActive = index === 0 ? "active" : ""
           colorsHtml += `
-                        <div class="color-option ${isActive}" 
-                             data-color="${variant.color.name}" 
-                             data-color-code="${variant.color.code}" 
-                             data-image-url="${variant.imageUrl}"
-                             style="background-color: ${variant.color.code};" 
-                             title="${variant.color.name}">
-                        </div>`
-
-          // Tải trước ảnh cho mỗi biến thể màu sắc
-          preloadImage(variant.imageUrl)
+                      <div class="color-option ${isActive}" 
+                           data-color="${variant.color.name}" 
+                           data-color-code="${variant.color.code}" 
+                           data-image-url="${variant.imageUrl}"
+                           style="background-color: ${variant.color.code};" 
+                           title="${variant.color.name}">
+                      </div>`
         })
         colorsHtml += "</div>"
       }
 
       productCard.innerHTML = `
-                <div class="product-card">
-                    <div class="product-img-container">
-                        <img src="${product.imageUrl}" alt="${product.nameProduct}" class="product-img">
-                        <div class="img-loading-overlay">
-                            <div class="spinner-border spinner-border-sm text-primary" role="status">
-                                <span class="visually-hidden">Đang tải...</span>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="product-info">
-                        <span class="product-category">${product.category}</span>
-                        <h5 class="product-title">${product.nameProduct}</h5>
-                        <p class="product-price">${formattedPrice}đ</p>
-                        ${colorsHtml}
-                    </div>
-                </div>
-            `
+              <div class="product-card">
+                  <div class="product-img-container">
+                      <img data-src="${product.imageUrl}" alt="${product.nameProduct}" class="product-img lazy-image">
+                      <div class="img-loading-overlay active">
+                          <div class="spinner-border spinner-border-sm text-primary" role="status">
+                              <span class="visually-hidden">Đang tải...</span>
+                          </div>
+                      </div>
+                  </div>
+                  <div class="product-info">
+                      <span class="product-category">${product.category}</span>
+                      <h5 class="product-title">${product.nameProduct}</h5>
+                      <p class="product-price">${formattedPrice}đ</p>
+                      ${colorsHtml}
+                  </div>
+              </div>
+          `
 
       container.appendChild(productCard)
 
@@ -173,13 +170,30 @@ document.addEventListener("DOMContentLoaded", () => {
       const productImg = productCard.querySelector(".product-img")
       const loadingOverlay = productCard.querySelector(".img-loading-overlay")
 
-      // Ẩn overlay loading ban đầu
-      loadingOverlay.style.display = "none"
-
       // Thêm sự kiện khi ảnh chính tải xong
       productImg.onload = () => {
-        loadingOverlay.style.display = "none"
+        loadingOverlay.classList.remove("active")
       }
+
+      // Thêm sự kiện click cho ảnh sản phẩm để chuyển đến trang chi tiết
+      productImg.addEventListener("click", () => {
+        // Hiển thị overlay chuyển trang
+        const pageTransitionOverlay = document.getElementById("pageTransitionOverlay")
+        pageTransitionOverlay.classList.add("active")
+
+        // Lấy màu sắc đang được chọn
+        const selectedColor = productCard.querySelector(".color-option.active")
+        let colorParam = ""
+
+        if (selectedColor) {
+          colorParam = `&color=${encodeURIComponent(selectedColor.dataset.color)}`
+        }
+
+        // Chuyển hướng đến trang chi tiết sản phẩm sau một khoảng thời gian ngắn
+        setTimeout(() => {
+          window.location.href = `product-detail.html?name=${encodeURIComponent(product.nameProduct)}${colorParam}`
+        }, 300)
+      })
 
       colorOptions.forEach((option) => {
         option.addEventListener("click", function (e) {
@@ -199,7 +213,7 @@ document.addEventListener("DOMContentLoaded", () => {
           // Cập nhật hình ảnh sản phẩm nếu có
           if (imageUrl && imageUrl !== productImg.src) {
             // Hiển thị overlay loading
-            loadingOverlay.style.display = "flex"
+            loadingOverlay.classList.add("active")
 
             // Ẩn ảnh hiện tại trong khi đang tải
             productImg.style.opacity = "0.3"
@@ -212,7 +226,7 @@ document.addEventListener("DOMContentLoaded", () => {
               setTimeout(() => {
                 productImg.src = imageUrl
                 productImg.style.opacity = "1"
-                loadingOverlay.style.display = "none"
+                loadingOverlay.classList.remove("active")
               }, 300) // Thêm độ trễ nhỏ để hiệu ứng loading hiển thị rõ ràng hơn
             } else {
               // Nếu ảnh chưa tải xong, đợi sự kiện onload
@@ -220,7 +234,7 @@ document.addEventListener("DOMContentLoaded", () => {
               newImg.onload = () => {
                 productImg.src = imageUrl
                 productImg.style.opacity = "1"
-                loadingOverlay.style.display = "none"
+                loadingOverlay.classList.remove("active")
                 preloadedImages[imageUrl] = newImg
               }
               newImg.src = imageUrl
@@ -254,9 +268,42 @@ document.addEventListener("DOMContentLoaded", () => {
         })
       })
     })
+
+    // Khởi tạo lazy loading sau khi đã thêm tất cả sản phẩm vào DOM
+    initLazyLoading()
   }
 
-  // Hàm thiết lập bộ lọc danh mục
+  // Thêm hàm mới để khởi tạo lazy loading
+  function initLazyLoading() {
+    const lazyImages = document.querySelectorAll(".lazy-image")
+    
+    // Kiểm tra xem trình duyệt có hỗ trợ Intersection Observer không
+    if ("IntersectionObserver" in window) {
+      const imageObserver = new IntersectionObserver((entries, observer) => {
+        entries.forEach(entry => {
+          if (entry.isIntersecting) {
+            const image = entry.target
+            image.src = image.dataset.src
+            image.classList.remove("lazy-image")
+            imageObserver.unobserve(image)
+          }
+        })
+      }, {
+        rootMargin: "0px 0px 200px 0px" // Tải trước ảnh khi còn cách 200px
+      })
+
+      lazyImages.forEach(image => {
+        imageObserver.observe(image)
+      })
+    } else {
+      // Fallback cho trình duyệt không hỗ trợ Intersection Observer
+      lazyImages.forEach(image => {
+        image.src = image.dataset.src
+      })
+    }
+  }
+
+  // Thêm hàm thiết lập bộ lọc danh mục
   function setupCategoryFilters() {
     const filterContainer = document.getElementById("category-filters")
     const categories = new Set()
@@ -371,132 +418,40 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   })
 
-  // Tải sản phẩm khi trang tải
-  loadProducts()
+  // Xử lý nút cuộn lên đầu trang
+  const scrollToTopButton = document.getElementById("scrollToTop")
 
-  // Thêm code xử lý modal vào cuối file, trước dòng cuối cùng (})
-
-  // Sửa hàm showProductModal để thêm tải trước ảnh
-  function showProductModal(product, selectedColor) {
-    const modal = document.getElementById("productModal")
-    const modalImage = document.getElementById("modalProductImage")
-    const modalName = document.getElementById("modalProductName")
-    const modalPrice = document.getElementById("modalProductPrice")
-    const modalColors = document.getElementById("modalProductColors")
-
-    // Get product data
-    const productName = product.querySelector(".product-title").textContent
-    const productPrice = product.querySelector(".product-price").textContent
-
-    // Find the product in our data to get the description
-    const productData = filteredProducts.find((p) => p.nameProduct === productName)
-    const productDescription = productData ? productData.description : ""
-
-    // Cập nhật thông tin sản phẩm trong modal
-    const imageSrc = selectedColor ? selectedColor.dataset.imageUrl : product.querySelector(".product-img").src
-
-    // Hiển thị loading trước khi tải ảnh
-    modalImage.style.opacity = "0.5"
-
-    // Cập nhật ảnh với hiệu ứng loading
-    if (preloadedImages[imageSrc] && preloadedImages[imageSrc].complete) {
-      setTimeout(() => {
-        modalImage.src = imageSrc
-        modalImage.style.opacity = "1"
-      }, 200)
+  // Hiển thị nút khi cuộn xuống
+  window.addEventListener("scroll", () => {
+    if (window.scrollY > 300) {
+      scrollToTopButton.classList.add("visible")
     } else {
-      const newImg = new Image()
-      newImg.onload = () => {
-        modalImage.src = imageSrc
-        modalImage.style.opacity = "1"
-        preloadedImages[imageSrc] = newImg
-      }
-      newImg.src = imageSrc
+      scrollToTopButton.classList.remove("visible")
     }
-
-    modalName.textContent = productName
-    modalPrice.textContent = productPrice
-
-    // Add description to modal
-    const modalDescription = document.getElementById("modalProductDescription")
-    if (modalDescription) {
-      modalDescription.textContent = productDescription
+    
+    // Kiểm tra lại lazy loading khi cuộn trang
+    if (typeof initLazyLoading === "function") {
+      initLazyLoading()
     }
-
-    // Xóa các tùy chọn màu sắc hiện tại
-    modalColors.innerHTML = ""
-
-    // Thêm các tùy chọn màu sắc mới
-    const colorOptions = product.querySelectorAll(".color-option")
-    if (colorOptions.length > 0) {
-      colorOptions.forEach((option) => {
-        const colorClone = option.cloneNode(true)
-        colorClone.addEventListener("click", function () {
-          // Xóa active từ tất cả các màu
-          modalColors.querySelectorAll(".color-option").forEach((opt) => opt.classList.remove("active"))
-          // Thêm active vào màu được chọn
-          this.classList.add("active")
-
-          // Cập nhật hình ảnh với hiệu ứng loading
-          const imageUrl = this.dataset.imageUrl
-          modalImage.style.opacity = "0.5"
-
-          if (preloadedImages[imageUrl] && preloadedImages[imageUrl].complete) {
-            setTimeout(() => {
-              modalImage.src = imageUrl
-              modalImage.style.opacity = "1"
-            }, 200)
-          } else {
-            const newImg = new Image()
-            newImg.onload = () => {
-              modalImage.src = imageUrl
-              modalImage.style.opacity = "1"
-              preloadedImages[imageUrl] = newImg
-            }
-            newImg.src = imageUrl
-          }
-        })
-        modalColors.appendChild(colorClone)
-      })
-    }
-
-    // Hiển thị modal
-    const bsModal = new bootstrap.Modal(modal)
-    bsModal.show()
-  }
-
-  // Thêm sự kiện click cho ảnh sản phẩm
-  function setupProductImageClickEvents() {
-    document.querySelectorAll(".product-img").forEach((img) => {
-      img.addEventListener("click", function () {
-        const productCard = this.closest(".product-card")
-        const selectedColor = productCard.querySelector(".color-option.active")
-        showProductModal(productCard, selectedColor)
-      })
-    })
-  }
-
-  // Xử lý nút hỗ trợ
-  document.getElementById("supportButton").addEventListener("click", () => {
-    // Đóng modal sản phẩm
-    const productModal = bootstrap.Modal.getInstance(document.getElementById("productModal"))
-    if (productModal) {
-      productModal.hide()
-    }
-
-    // Hiển thị modal hỗ trợ
-    setTimeout(() => {
-      const supportModal = new bootstrap.Modal(document.getElementById("supportModal"))
-      supportModal.show()
-    }, 500)
   })
 
-  // Ghi đè hàm displayGroupedProducts để thêm sự kiện click
-  const originalDisplayGroupedProducts = displayGroupedProducts
-  displayGroupedProducts = () => {
-    originalDisplayGroupedProducts()
-    setupProductImageClickEvents()
-  }
+  // Cuộn lên đầu trang khi nhấp vào nút
+  scrollToTopButton.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    })
+  })
+
+  // Kiểm tra xem có đang chuyển từ trang khác sang không
+  window.addEventListener("load", () => {
+    const pageTransitionOverlay = document.getElementById("pageTransitionOverlay")
+
+    // Ẩn overlay sau khi trang đã tải xong
+    setTimeout(() => {
+      pageTransitionOverlay.classList.remove("active")
+    }, 500)
+  })
 
   // Thêm hàm tải trước tất cả ảnh của sản phẩm
   function preloadAllProductImages() {
@@ -509,5 +464,7 @@ document.addEventListener("DOMContentLoaded", () => {
       })
     }
   }
-})
 
+  // Tải sản phẩm khi trang tải
+  loadProducts()
+})
