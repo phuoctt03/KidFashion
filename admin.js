@@ -11,7 +11,7 @@ document.addEventListener("DOMContentLoaded", () => {
   const REPO_NAME = "KidFashion"
 
   // Biến để theo dõi trạng thái dữ liệu
-  let dataModified = false
+  let dataModified = true
 
   // Kiểm tra đăng nhập
   checkLoginStatus()
