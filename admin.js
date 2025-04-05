@@ -10,6 +10,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const REPO_OWNER = "phuoctt03"
   const REPO_NAME = "KidFashion"
 
+  // Biến để theo dõi trạng thái dữ liệu
+  let dataModified = true
+
   // Kiểm tra đăng nhập
   checkLoginStatus()
 
@@ -32,6 +35,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Thêm sự kiện cho nút nhập token
   document.getElementById("settings-btn").addEventListener("click", openSettingsModal)
+
+  // Thêm sự kiện cho nút reload products
+  document.getElementById("reload-products-btn").addEventListener("click", reloadProductsFromCSV)
 
   // Xử lý form cài đặt
   document.getElementById("settings-form").addEventListener("submit", (e) => {
@@ -101,25 +107,25 @@ document.addEventListener("DOMContentLoaded", () => {
   // Xử lý form đăng nhập
   document.getElementById("login-form").addEventListener("submit", (e) => {
     e.preventDefault()
-    loginFunc()
+    // loginFunc() // Remove loginFunc call
   })
 
   // Hàm xử lý đăng nhập
-  function loginFunc() {
-    // Lấy giá trị từ các trường nhập liệu
-    const username = document.getElementById("username").value
-    const password = document.getElementById("password").value
+  // function loginFunc() { // Remove loginFunc
+  //   // Lấy giá trị từ các trường nhập liệu
+  //   const username = document.getElementById("username").value
+  //   const password = document.getElementById("password").value
 
-    // Kiểm tra thông tin đăng nhập (ví dụ: so sánh với thông tin cố định)
-    if (username === "admin" && password === "password") {
-      // Đăng nhập thành công
-      showToast("Thành công", "Đăng nhập thành công", "success")
-      loginModal.hide()
-    } else {
-      // Đăng nhập thất bại
-      showToast("Lỗi", "Tên đăng nhập hoặc mật khẩu không đúng", "error")
-    }
-  }
+  //   // Kiểm tra thông tin đăng nhập (ví dụ: so sánh với thông tin cố định)
+  //   if (username === "admin" && password === "password") {
+  //     // Đăng nhập thành công
+  //     showToast("Thành công", "Đăng nhập thành công", "success")
+  //     loginModal.hide()
+  //   } else {
+  //     // Đăng nhập thất bại
+  //     showToast("Lỗi", "Tên đăng nhập hoặc mật khẩu không đúng", "error")
+  //   }
+  // }
 
   // Xử lý nút reset form
   document.getElementById("reset-form").addEventListener("click", () => {
@@ -171,7 +177,17 @@ document.addEventListener("DOMContentLoaded", () => {
     const productTableBody = document.getElementById("product-table-body")
     showLoading(productTableBody, 6)
 
-    // Luôn tải file CSV để kiểm tra cập nhật
+    // Nếu dữ liệu đã được sửa đổi, sử dụng dữ liệu từ localStorage
+    if (dataModified) {
+      console.log("Sử dụng dữ liệu đã sửa đổi từ localStorage")
+      const localData = localStorage.getItem("productsCSV")
+      if (localData) {
+        processCSVData(localData)
+        return
+      }
+    }
+
+    // Nếu không có sửa đổi hoặc không có dữ liệu trong localStorage, tải từ file CSV
     fetch("products.csv")
       .then((response) => response.text())
       .then((csvText) => {
@@ -291,16 +307,16 @@ document.addEventListener("DOMContentLoaded", () => {
     return Object.values(grouped)
   }
 
-  // Hàm hiển thị sản phẩm trong bảng
+  // Cập nhật hàm hiển thị sản phẩm trong bảng để có cấu trúc gọn gàng hơn
   function displayProductsInTable(products) {
     productTableBody.innerHTML = ""
 
     if (products.length === 0) {
       productTableBody.innerHTML = `
-          <tr>
-            <td colspan="6" class="text-center py-4">Không có sản phẩm nào</td>
-          </tr>
-        `
+    <tr>
+      <td colspan="4" class="text-center py-4">Không có sản phẩm nào</td>
+    </tr>
+  `
       return
     }
 
@@ -318,31 +334,37 @@ document.addEventListener("DOMContentLoaded", () => {
 
       const row = document.createElement("tr")
       row.innerHTML = `
-          <td>
-            <img src="${product.imageUrl}" alt="${product.nameProduct}" class="product-img">
-          </td>
-          <td>
-            <span class="product-name fw-bold">${product.nameProduct}</span>
-            <small class="text-muted d-block">${product.variants ? product.variants.length : 0} màu sắc</small>
-          </td>
-          <td>
-            <span class="product-category">${product.category}</span>
-          </td>
-          <td>
-            <span class="product-price fw-bold">${formattedPrice}đ</span>
-          </td>
-          <td>
-            ${colorsHtml}
-          </td>
-          <td>
-            <button class="btn btn-sm btn-outline-primary btn-action edit-product" data-product-name="${product.nameProduct}" title="Chỉnh sửa">
-              <i class="bi bi-pencil"></i>
-            </button>
-            <button class="btn btn-sm btn-outline-success btn-action add-variant-to-product" data-product-name="${product.nameProduct}" title="Thêm màu sắc">
-              <i class="bi bi-palette"></i>
-            </button>
-          </td>
-        `
+    <td>
+      <div class="product-img-container">
+        <img src="${product.imageUrl}" alt="${product.nameProduct}" class="product-img">
+      </div>
+    </td>
+    <td>
+      <div class="product-info">
+        <span class="product-name" title="${product.nameProduct}">${product.nameProduct}</span>
+        <span class="product-category">${product.category}</span>
+        <small class="variant-count">${product.variants ? product.variants.length : 0} màu sắc</small>
+      </div>
+    </td>
+    <td>
+      <div class="price-color-container">
+        <span class="product-price">${formattedPrice}đ</span>
+        <div class="color-dots-container">
+          ${colorsHtml}
+        </div>
+      </div>
+    </td>
+    <td>
+      <div class="action-buttons">
+        <button class="btn btn-sm btn-outline-primary btn-action edit-product" data-product-name="${product.nameProduct}" title="Chỉnh sửa">
+          <i class="bi bi-pencil"></i>
+        </button>
+        <button class="btn btn-sm btn-outline-success btn-action add-variant-to-product" data-product-name="${product.nameProduct}" title="Thêm màu sắc">
+          <i class="bi bi-palette"></i>
+        </button>
+      </div>
+    </td>
+  `
 
       productTableBody.appendChild(row)
     })
@@ -492,7 +514,7 @@ document.addEventListener("DOMContentLoaded", () => {
     }
   }
 
-  // Hàm mở modal chỉnh sửa sản phẩm
+  // Thay đổi hàm mở modal chỉnh sửa sản phẩm để hiển thị tất cả các màu sắc
   function openEditProductModal(productName) {
     // Tìm sản phẩm theo tên
     const groupedProducts = groupProductsByName(allProducts)
@@ -519,15 +541,103 @@ document.addEventListener("DOMContentLoaded", () => {
       }
     }
 
-    // Hiển thị màu sắc đầu tiên (nếu có)
-    if (product.variants && product.variants.length > 0) {
-      const firstVariant = product.variants[0]
-      document.getElementById("edit-product-color-name").value = firstVariant.color.name
-      document.getElementById("edit-product-color-code").value = firstVariant.color.code
-    }
+    // Hiển thị tất cả các màu sắc
+    const colorsContainer = document.getElementById("edit-product-colors")
+    colorsContainer.innerHTML = ""
+
+    product.variants.forEach((variant, index) => {
+      const colorItem = document.createElement("div")
+      colorItem.className = "color-variant-item"
+      colorItem.setAttribute("data-variant-index", index)
+      colorItem.innerHTML = `
+<span class="color-dot" style="background-color: ${variant.color.code};"></span>
+<span class="color-name">${variant.color.name}</span>
+<div class="color-actions">
+  <button type="button" class="btn btn-sm btn-outline-primary btn-action edit-variant" 
+    data-variant-index="${index}" title="Sửa màu">
+    <i class="bi bi-pencil"></i>
+  </button>
+  <button type="button" class="btn btn-sm btn-outline-info btn-action view-variant" 
+    data-variant-index="${index}" title="Xem ảnh">
+    <i class="bi bi-eye"></i>
+  </button>
+  <button type="button" class="btn btn-sm btn-outline-danger btn-action delete-variant" 
+    data-variant-index="${index}" title="Xóa màu">
+    <i class="bi bi-trash"></i>
+  </button>
+</div>
+`
+      colorsContainer.appendChild(colorItem)
+    })
+
+    // Thêm sự kiện cho nút xem biến thể
+    document.querySelectorAll(".view-variant").forEach((button) => {
+      button.addEventListener("click", function (e) {
+        e.stopPropagation() // Ngăn sự kiện lan ra phần tử cha
+        const variantIndex = this.getAttribute("data-variant-index")
+        const variant = product.variants[variantIndex]
+        document.getElementById("edit-current-image").src = variant.imageUrl
+      })
+    })
+
+    // Thêm sự kiện cho nút sửa biến thể
+    document.querySelectorAll(".edit-variant").forEach((button) => {
+      button.addEventListener("click", function (e) {
+        e.stopPropagation() // Ngăn sự kiện lan ra phần tử cha
+        const variantIndex = this.getAttribute("data-variant-index")
+        openEditColorForm(product, variantIndex)
+      })
+    })
+
+    // Thêm sự kiện cho nút xóa biến thể
+    document.querySelectorAll(".delete-variant").forEach((button) => {
+      button.addEventListener("click", function (e) {
+        e.stopPropagation() // Ngăn sự kiện lan ra phần tử cha
+        const variantIndex = this.getAttribute("data-variant-index")
+        const variant = product.variants[variantIndex]
+        showConfirmationModal(`Bạn có chắc chắn muốn xóa màu "${variant.color.name}" không?`, () => {
+          deleteVariant(productName, variantIndex)
+        })
+      })
+    })
+
+    // Thêm sự kiện click cho toàn bộ item màu sắc
+    document.querySelectorAll(".color-variant-item").forEach((item) => {
+      item.addEventListener("click", function () {
+        const variantIndex = this.getAttribute("data-variant-index")
+        openEditColorForm(product, variantIndex)
+      })
+    })
+
+    // Ẩn form chỉnh sửa màu sắc
+    document.getElementById("edit-color-form").classList.add("d-none")
 
     // Hiển thị modal
     editProductModal.show()
+  }
+
+  // Thêm hàm mở form chỉnh sửa màu sắc
+  function openEditColorForm(product, variantIndex) {
+    const variant = product.variants[variantIndex]
+    const colorForm = document.getElementById("edit-color-form")
+
+    // Đánh dấu màu đang được chọn
+    document.querySelectorAll(".color-variant-item").forEach((item) => {
+      item.classList.remove("active")
+    })
+    document.querySelector(`.color-variant-item[data-variant-index="${variantIndex}"]`).classList.add("active")
+
+    // Hiển thị form chỉnh sửa màu
+    colorForm.classList.remove("d-none")
+
+    // Cập nhật thông tin màu sắc vào form
+    document.getElementById("current-color-name").textContent = variant.color.name
+    document.getElementById("edit-color-name").value = variant.color.name
+    document.getElementById("edit-color-code").value = variant.color.code
+    document.getElementById("edit-color-index").value = variantIndex
+
+    // Hiển thị ảnh của biến thể
+    document.getElementById("edit-current-image").src = variant.imageUrl
   }
 
   // Hàm mở form thêm biến thể cho sản phẩm cụ thể
@@ -548,7 +658,7 @@ document.addEventListener("DOMContentLoaded", () => {
     window.scrollTo(0, 0)
   }
 
-  // Hàm lưu chỉnh sửa sản phẩm
+  // Cập nhật hàm lưu chỉnh sửa sản phẩm để giữ nguyên các biến thể màu sắc
   function saveEditProduct() {
     if (isUploading) {
       showToast("Thông báo", "Đang có quá trình tải lên, vui lòng đợi", "warning")
@@ -791,7 +901,7 @@ document.addEventListener("DOMContentLoaded", () => {
     isUploading = true
 
     // Tạo tên file ảnh
-    const imageFileName = `${productName.toLowerCase().replace(/\s+/g, "-")}-${colorName.toLowerCase()}-${Date.now()}.jpg`
+    const imageFileName = `${Date.now()}.jpg`
 
     // Tìm thông tin sản phẩm
     const productInfo = allProducts.find((p) => p.nameProduct === productName)
@@ -901,46 +1011,67 @@ document.addEventListener("DOMContentLoaded", () => {
 
   // Hàm lưu dữ liệu vào CSV
   function saveProductsToCSV(successCallback, errorCallback) {
-    // Chuẩn bị dữ liệu cho CSV
-    const csvData = allProducts.map((product) => {
-      return {
-        imageUrl: product.imageUrl.replace("images/", ""),
-        nameProduct: product.nameProduct,
-        category: product.category,
-        price: product.price,
-        description: product.description || "",
-        colors: product.colors || (product.color ? `${product.color.name}:${product.color.code}` : ""),
-      }
+    // Hiển thị thông báo đang xử lý
+    showToast("Đang xử lý", "Đang cập nhật dữ liệu lên GitHub...", "info")
+
+    // Đánh dấu dữ liệu đã thay đổi
+    dataModified = true
+
+    // Đầu tiên, lấy thông tin file hiện tại để có được SHA
+    fetch(`https://api.github.com/repos/${REPO_OWNER}/${REPO_NAME}/contents/${path}`, {
+      headers: {
+        Authorization: `token ${githubToken}`,
+        Accept: "application/vnd.github.v3+json",
+      },
     })
+      .then((response) => {
+        if (!response.ok) {
+          throw new Error(`Không thể lấy thông tin file: ${response.status} ${response.statusText}`)
+        }
+        return response.json()
+      })
+      .then((data) => {
+        // Chuẩn bị dữ liệu để cập nhật file
+        const csvData = allProducts.map((product) => {
+          return {
+            imageUrl: product.imageUrl.replace("images/", ""),
+            nameProduct: product.nameProduct,
+            category: product.category,
+            price: product.price,
+            description: product.description || "",
+            colors: product.colors || (product.color ? `${product.color.name}:${product.color.code}` : ""),
+          }
+        })
 
-    // Tạo nội dung CSV
-    const csvContent = Papa.unparse(csvData, {
-      quotes: true, // Đảm bảo các trường có dấu phẩy được bọc trong dấu ngoặc kép
-      quoteChar: '"',
-      header: true,
-      newline: "\n",
-    })
+        // Tạo nội dung CSV
+        const csvContent = Papa.unparse(csvData, {
+          quotes: true, // Đảm bảo các trường có dấu phẩy được bọc trong dấu ngoặc kép
+          quoteChar: '"',
+          header: true,
+          newline: "\n",
+        })
 
-    // Lưu vào localStorage
-    localStorage.setItem("productsCSV", csvContent)
+        // Lưu vào localStorage
+        localStorage.setItem("productsCSV", csvContent)
 
-    // Cập nhật dữ liệu hiện tại
-    const groupedProducts = groupProductsByName(allProducts)
-    displayProductsInTable(groupedProducts)
-    extractCategories()
-    displayCategories()
-    updateProductSelect()
+        // Cập nhật dữ liệu hiện tại
+        const groupedProducts = groupProductsByName(allProducts)
+        displayProductsInTable(groupedProducts)
+        extractCategories()
+        displayCategories()
+        updateProductSelect()
 
-    // Hiển thị thông báo lưu cục bộ thành công
-    showToast("Thành công", "Đã lưu dữ liệu vào bộ nhớ cục bộ", "success")
+        // Hiển thị thông báo lưu cục bộ thành công
+        showToast("Thành công", "Đã lưu dữ liệu vào bộ nhớ cục bộ", "success")
 
-    // Nếu có GitHub token, cập nhật file trên GitHub
-    if (githubToken) {
-      updateFileOnGitHub("products.csv", csvContent, "Cập nhật danh sách sản phẩm", successCallback, errorCallback)
-    } else {
-      if (successCallback) successCallback()
-      showToast("Cảnh báo", "Chưa cấu hình GitHub token. Dữ liệu chỉ được lưu cục bộ.", "warning")
-    }
+        // Nếu có GitHub token, cập nhật file trên GitHub
+        if (githubToken) {
+          updateFileOnGitHub("products.csv", csvContent, "Cập nhật danh sách sản phẩm", successCallback, errorCallback)
+        } else {
+          if (successCallback) successCallback()
+          showToast("Cảnh báo", "Chưa cấu hình GitHub token. Dữ liệu chỉ được lưu cục bộ.", "warning")
+        }
+      })
   }
 
   // Hàm hiển thị section
@@ -1173,12 +1304,232 @@ document.addEventListener("DOMContentLoaded", () => {
       section.classList.remove("active")
     }
   })
+
+  // Hàm tải lại dữ liệu từ file CSV
+  function reloadProductsFromCSV() {
+    // Hiển thị thông báo đang tải
+    showToast("Đang xử lý", "Đang tải lại dữ liệu từ file CSV...", "info")
+
+    // Hiển thị loading trong bảng sản phẩm
+    showLoading(productTableBody, 6)
+
+    // Tải lại file CSV
+    fetch("products.csv")
+      .then((response) => response.text())
+      .then((csvText) => {
+        // Lưu CSV mới vào localStorage
+        localStorage.setItem("productsCSV", csvText)
+        originalCSV = csvText
+
+        // Xử lý dữ liệu CSV
+        processCSVData(csvText)
+
+        // Đặt lại trạng thái dữ liệu
+        dataModified = false
+
+        // Hiển thị thông báo thành công
+        showToast("Thành công", "Đã tải lại dữ liệu từ file CSV", "success")
+      })
+      .catch((error) => {
+        console.error("Lỗi khi tải tệp CSV:", error)
+        showToast("Lỗi", "Không thể tải lại dữ liệu từ file CSV", "error")
+      })
+  }
+
+  // Thêm hàm xóa biến thể màu sắc
+  function deleteVariant(productName, variantIndex) {
+    if (isUploading) {
+      showToast("Thông báo", "Đang có quá trình tải lên, vui lòng đợi", "warning")
+      return
+    }
+
+    // Tìm sản phẩm theo tên
+    const groupedProducts = groupProductsByName(allProducts)
+    const product = groupedProducts.find((p) => p.nameProduct === productName)
+
+    if (!product || !product.variants || !product.variants[variantIndex]) {
+      showToast("Lỗi", "Không tìm thấy biến thể màu sắc", "error")
+      return
+    }
+
+    // Lấy thông tin biến thể cần xóa
+    const variant = product.variants[variantIndex]
+    const colorName = variant.color.name
+    const imageUrl = variant.imageUrl
+
+    // Kiểm tra xem có phải biến thể cuối cùng không
+    if (product.variants.length <= 1) {
+      showToast(
+        "Cảnh báo",
+        "Không thể xóa biến thể cuối cùng của sản phẩm. Hãy xóa toàn bộ sản phẩm nếu cần.",
+        "warning",
+      )
+      return
+    }
+
+    // Hiển thị trạng thái đang xử lý
+    isUploading = true
+
+    // Xóa biến thể khỏi mảng dữ liệu
+    allProducts = allProducts.filter((p) => !(p.nameProduct === productName && p.imageUrl === imageUrl))
+
+    // Lưu dữ liệu vào CSV
+    saveProductsToCSV(
+      () => {
+        // Khôi phục trạng thái
+        isUploading = false
+
+        // Đóng modal xác nhận
+        confirmationModal.hide()
+
+        // Hiển thị thông báo
+        showToast("Thành công", `Đã xóa màu "${colorName}" của sản phẩm "${productName}"`, "success")
+
+        // Cập nhật lại modal chỉnh sửa sản phẩm
+        openEditProductModal(productName)
+      },
+      (error) => {
+        // Xử lý lỗi
+        isUploading = false
+        showToast("Lỗi", `Không thể xóa biến thể: ${error}`, "error")
+      },
+    )
+  }
+
+  // Thêm hàm saveColorEdit vào bên trong phạm vi của hàm chính
+  // Thêm vào trước dòng "// Thêm sự kiện cho nút lưu màu sắc"
+
+  // Hàm lưu chỉnh sửa màu sắc
+  function saveColorEdit() {
+    const productId = document.getElementById("edit-product-id").value
+    const variantIndex = document.getElementById("edit-color-index").value
+    const newColorName = document.getElementById("edit-color-name").value
+    const newColorCode = document.getElementById("edit-color-code").value
+
+    if (!newColorName) {
+      showToast("Lỗi", "Vui lòng nhập tên màu", "error")
+      return
+    }
+
+    // Tìm sản phẩm theo tên
+    const groupedProducts = groupProductsByName(allProducts)
+    const product = groupedProducts.find((p) => p.nameProduct === productId)
+
+    if (!product || !product.variants || !product.variants[variantIndex]) {
+      showToast("Lỗi", "Không tìm thấy biến thể màu sắc", "error")
+      return
+    }
+
+    // Cập nhật thông tin màu sắc trong dữ liệu
+    const variant = product.variants[variantIndex]
+    const oldColorName = variant.color.name
+    const imageUrl = variant.imageUrl
+
+    // Tìm sản phẩm thực tế trong allProducts để cập nhật
+    const actualProduct = allProducts.find((p) => p.nameProduct === productId && p.imageUrl === imageUrl)
+
+    if (actualProduct) {
+      // Cập nhật màu sắc
+      actualProduct.colors = `${newColorName}:${newColorCode}`
+      if (actualProduct.color) {
+        actualProduct.color.name = newColorName
+        actualProduct.color.code = newColorCode
+      }
+
+      // Cập nhật giao diện
+      const colorItem = document.querySelector(`.color-variant-item[data-variant-index="${variantIndex}"]`)
+      if (colorItem) {
+        colorItem.querySelector(".color-name").textContent = newColorName
+        colorItem.querySelector(".color-dot").style.backgroundColor = newColorCode
+      }
+
+      // Cập nhật tên màu hiện tại
+      document.getElementById("current-color-name").textContent = newColorName
+
+      // Hiển thị thông báo
+      showToast("Thành công", `Đã cập nhật màu từ "${oldColorName}" thành "${newColorName}"`, "success")
+
+      // Đánh dấu dữ liệu đã thay đổi
+      dataModified = true
+    } else {
+      showToast("Lỗi", "Không thể cập nhật màu sắc", "error")
+    }
+  }
+
+  // Thêm sự kiện cho nút lưu màu sắc
+  document.getElementById("save-edit-color").addEventListener("click", saveColorEdit)
+
+  // Thêm sự kiện cho nút hủy chỉnh sửa màu sắc
+  document.getElementById("cancel-edit-color").addEventListener("click", () => {
+    document.getElementById("edit-color-form").classList.add("d-none")
+    document.querySelectorAll(".color-variant-item").forEach((item) => {
+      item.classList.remove("active")
+    })
+  })
+
+  // Thêm hàm lưu chỉnh sửa màu sắc
+  // function saveColorEdit() {
+  //   const productId = document.getElementById("edit-product-id").value
+  //   const variantIndex = document.getElementById("edit-color-index").value
+  //   const newColorName = document.getElementById("edit-color-name").value
+  //   const newColorCode = document.getElementById("edit-color-code").value
+
+  //   if (!newColorName) {
+  //     showToast("Lỗi", "Vui lòng nhập tên màu", "error")
+  //     return
+  //   }
+
+  //   // Tìm sản phẩm theo tên
+  //   const groupedProducts = groupProductsByName(allProducts)
+  //   const product = groupedProducts.find((p) => p.nameProduct === productId)
+
+  //   if (!product || !product.variants || !product.variants[variantIndex]) {
+  //     showToast("Lỗi", "Không tìm thấy biến thể màu sắc", "error")
+  //     return
+  //   }
+
+  //   // Cập nhật thông tin màu sắc trong dữ liệu
+  //   const variant = product.variants[variantIndex]
+  //   const oldColorName = variant.color.name
+  //   const imageUrl = variant.imageUrl
+
+  //   // Tìm sản phẩm thực tế trong allProducts để cập nhật
+  //   const actualProduct = allProducts.find((p) => p.nameProduct === productId && p.imageUrl === imageUrl)
+
+  //   if (actualProduct) {
+  //     // Cập nhật màu sắc
+  //     actualProduct.colors = `${newColorName}:${newColorCode}`
+  //     if (actualProduct.color) {
+  //       actualProduct.color.name = newColorName
+  //       actualProduct.color.code = newColorCode
+  //     }
+
+  //     // Cập nhật giao diện
+  //     const colorItem = document.querySelector(`.color-variant-item[data-variant-index="${variantIndex}"]`)
+  //     if (colorItem) {
+  //       colorItem.querySelector(".color-name").textContent = newColorName
+  //       colorItem.querySelector(".color-dot").style.backgroundColor = newColorCode
+  //     }
+
+  //     // Cập nhật tên màu hiện tại
+  //     document.getElementById("current-color-name").textContent = newColorName
+
+  //     // Hiển thị thông báo
+  //     showToast("Thành công", `Đã cập nhật màu từ "${oldColorName}" thành "${newColorName}"`, "success")
+
+  //     // Đánh dấu dữ liệu đã thay đổi
+  //     dataModified = true
+  //   } else {
+  //     showToast("Lỗi", "Không thể cập nhật màu sắc", "error")
+  //   }
+  // }
 })
 
 // Thêm biến lưu trữ GitHub token
 const githubToken = localStorage.getItem("githubToken") || ""
 const REPO_OWNER = "phuoctt03"
 const REPO_NAME = "KidFashion"
+const path = "products.csv"
 
 // Fix: Declare bootstrap and Papa
 const bootstrap = window.bootstrap
@@ -1188,6 +1539,30 @@ const Papa = window.Papa
 // Xóa sự kiện đăng nhập
 document.getElementById("login-form").removeEventListener("submit", (e) => {
   e.preventDefault()
-  loginFunc()
+  // loginFunc()
+})
+
+// Thêm mã JavaScript cho nút cuộn lên đầu trang vào cuối file, trước dấu đóng ngoặc cuối cùng
+
+// Xử lý nút cuộn lên đầu trang
+document.addEventListener("DOMContentLoaded", () => {
+  const scrollToTopBtn = document.getElementById("scroll-to-top")
+
+  // Hiển thị nút khi cuộn xuống 300px
+  window.addEventListener("scroll", () => {
+    if (window.pageYOffset > 300) {
+      scrollToTopBtn.classList.add("show")
+    } else {
+      scrollToTopBtn.classList.remove("show")
+    }
+  })
+
+  // Cuộn lên đầu trang khi nhấp vào nút
+  scrollToTopBtn.addEventListener("click", () => {
+    window.scrollTo({
+      top: 0,
+      behavior: "smooth",
+    })
+  })
 })
 
