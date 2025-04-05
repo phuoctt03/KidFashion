@@ -13,9 +13,6 @@ document.addEventListener("DOMContentLoaded", () => {
   // Biến để theo dõi trạng thái dữ liệu
   let dataModified = true
 
-  // Kiểm tra đăng nhập
-  checkLoginStatus()
-
   // Các phần tử DOM
   const adminSections = document.querySelectorAll(".admin-section")
   const adminMenuItems = document.querySelectorAll(".admin-menu .list-group-item")
@@ -32,6 +29,9 @@ document.addEventListener("DOMContentLoaded", () => {
   const confirmationModal = new bootstrap.Modal(document.getElementById("confirmationModal"))
   const toastNotification = new bootstrap.Toast(document.getElementById("toast-notification"))
   const settingsModal = new bootstrap.Modal(document.getElementById("settingsModal"))
+
+  // Kiểm tra đăng nhập
+  checkLoginStatus()
 
   // Thêm sự kiện cho nút nhập token
   document.getElementById("settings-btn").addEventListener("click", openSettingsModal)
