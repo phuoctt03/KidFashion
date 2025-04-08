@@ -311,6 +311,9 @@ document.addEventListener("DOMContentLoaded", () => {
   function displayProductsInTable(products) {
     productTableBody.innerHTML = ""
 
+    // Sắp xếp sản phẩm từ mới đến cũ
+    products.reverse();
+
     if (products.length === 0) {
       productTableBody.innerHTML = `
     <tr>
@@ -783,6 +786,14 @@ document.addEventListener("DOMContentLoaded", () => {
 
     if (!name || !category || !price || !colorName || !imageFile) {
       showToast("Lỗi", "Vui lòng điền đầy đủ thông tin bắt buộc", "error")
+      return
+    }
+
+    // Kiểm tra tên sản phẩm đã tồn tại chưa
+    const productExists = allProducts.some((product) => product.nameProduct.toLowerCase() === name.toLowerCase())
+
+    if (productExists) {
+      showToast("Lỗi", "Tên sản phẩm đã tồn tại. Vui lòng đặt tên khác!", "error")
       return
     }
 
@@ -1565,4 +1576,3 @@ document.addEventListener("DOMContentLoaded", () => {
     })
   })
 })
-
